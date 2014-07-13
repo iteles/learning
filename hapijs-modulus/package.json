@@ -1,0 +1,15 @@
+{
+    "name": "ModulusRestAPI",
+    "version": "0.0.1",
+
+    "engines": {
+        "node": ">=0.10.29"
+    },
+
+    "dependencies": {
+        "hapi": "6.x",
+        "joi": "4.6.x"
+
+    },
+    "private": "true"
+}

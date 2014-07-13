@@ -8,4 +8,4 @@ In terms of dependencies, this API uses:
 * [lout](https://www.npmjs.org/package/lout), a documentation generator plugin for hapi
 * [handlebars](https://www.npmjs.org/package/handlebars), a templating language used to process templates and helpers
 
-As at 13th July 2014, the code is still not functional. I'm changing small bits where I can to bring them up to date but I'm still learning what all the working parts do. I plan to make this example work for the current versions of hapi and lout and handlebars.
+As at 13th July 2014, the code is still not functional. I'm changing small bits where I can to bring them up to date but I'm still learning what all the working parts do so I'll have to learn some more in order to make this example work correctly.

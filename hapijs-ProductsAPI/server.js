@@ -6,19 +6,19 @@ var options = { };
 var server = new Hapi.Server('0.0.0.0', 8080, options);
 
 //registering the lout plugin which enable the documentation generator - this in turn lists all available endpoints and their requirements
+//ALTERED THE CODE here for lout
+//every hapi server belongs to a hapi pack of servers, whether or not it was explicitly registered for one
 server.pack.register({
-    plugin: require('lout'),
-    options: {
-        endpoint: '/docs'
-    }
+    //lout plugin defaults to the endpoint /docs
+    plugin: require('lout')
  }, function (err) {
 
      if (err) {
-         console.log('Failed loading plugin');
+         console.log('Failed loading lout plugin');
      }
  });
 
- 
+
 //rather than adding a single route here through server.route(), we are storing an array of routes elsewhere and then pulling them in here
 server.route(routes);
 
