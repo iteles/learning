@@ -1,0 +1,5 @@
+#Mac Store file
+.DS_Store
+
+#Node modules as installed by package.json
+node_modules
