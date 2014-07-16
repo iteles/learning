@@ -1,0 +1,4 @@
+I've got a lovely bunch of coconuts (line 1)
+There they are all standing in a row (line 2)
+This text should be being piped to the textFromSocket-chapter10 text file (line 3)
+quit

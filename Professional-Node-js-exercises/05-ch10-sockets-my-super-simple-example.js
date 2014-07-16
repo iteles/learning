@@ -1,3 +1,5 @@
+//require 'net'because we're building a TCP server in this chapter, not 'http' for example
+
 var server = require('net').createServer(function(socket){
 	console.log('A new connection has been created');
 
