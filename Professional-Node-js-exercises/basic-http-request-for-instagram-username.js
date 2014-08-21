@@ -2,10 +2,11 @@
 var request = require('request');
 
 request('http://www.instagram.com/ajkjhdiuy', function (error, response, body) {
-    if(!error && response.statusCode == 404){
+    if(error){ throw error;}
+    if(response.statusCode == 404){
     console.log('Yay! That username is available on Instagram.');
-  }
-  else{
+    }
+    else{
     console.log('Sorry, that username is already taken on Instagram.');
   }
 });
