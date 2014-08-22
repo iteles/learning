@@ -1,0 +1,14 @@
+{
+  "name": "NG",
+  "version": "0.0.0",
+  "description": "ideaQ NG project",
+  "main": "basic-http-request-for-instagram-username.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "IT",
+  "license": "MIT"
+}
