@@ -1,4 +1,4 @@
-[#Codecademy | jQuery](http://www.codecademy.com/en/tracks/jquery)
+#[Codecademy | jQuery](http://www.codecademy.com/en/tracks/jquery)
 
 As I follow this 3 hour tutorial on learning jQuery, I'll add useful notes below as I'm learning and commented code snippets to the repository.
 
@@ -25,12 +25,13 @@ The [jQuery documentation](http://api.jquery.com/) is the best source of informa
   * `$('div').click(function(){ //dosomething})` - event is carried out when mouse clicks on div
   * `$('div').dblclick(function(){ //dosomething})`- event is carried out when mouse double clicks on div
   * The `.keydown()` event is triggered whenever a key on the keyboard is pressed (only works when an element has focus)
-  * `$('div').on(function(){ //dosomething})` is essentially a 'general purpose' environment, where the syntax is
+  * `$('div').on(function(){ //dosomething})` is essentially a 'general purpose' environment, where the syntax is:
 ```javascript
   $(document).on('event', 'selector', function() {
       //Do something, can also use the $(this) selector here
   });
 ```
+
 
 
 ###Using `$this`
@@ -43,6 +44,8 @@ $(document).ready(function() {
     });
 });
 ```
+
+
 ###Functions used
 * `$('div').fadeTo(speed, opacity)` - speed can be in milliseconds (numerical, such as 10000) or 'fast' and 'slow', opacity can be a decimal representing a percentage
 * `$('div').fadeOut(speed)`
@@ -59,6 +62,7 @@ $(document).ready(function() {
 * `$('div').focus(something)` does whatever that _something_ is (like [change the colour of the focus using CSS](#css)) when the focus is on that div (for example when the mouse is clicked on it or it is tabbed to)
 * `$('div').animate(animation, time)` takes two inputs: the animation to perform, and the time in which to perform the animation, e.g. `$('div').animate({left:'+=10px'},500);` (add 10px to the left margin throughout a 500ms time period)
 
+
 <a name="css"/>
 ####Changing CSS styles with jQuery
 ```javascript
@@ -69,5 +73,13 @@ $(document).ready(function(){
 });
 ```
 
+
 ###Miscellaneous
 * One can pick up on a form `input` field using it's name and the `val()` function: `var input = $('input[name=checkListItem]').val();`
+
+
+
+###jQuery UI
+To include jQuery UI, add the following <script> tag to your HTML document's <head>: ` <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>`
+
+The [jQuery UI documentation](http://jqueryui.com/) is especially useful. Various examples of jQuery UI effects can be found in this repository in the [06-jQuery-UI-multiple-examples.js](https://github.com/iteles/learning/blob/master/jQuery-codecademy/06-jQuery-UI-multiple-examples.js) and the accordion menu effect in [07-jQuery-UI-accordion-menu.js](https://github.com/iteles/learning/blob/master/jQuery-codecademy/07-jQuery-UI-accordion-menu.js).
