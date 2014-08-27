@@ -64,7 +64,7 @@ $(document).ready(function() {
 
 
 <a name="css"/>
-####Changing CSS styles with jQuery
+###Changing CSS styles with jQuery
 ```javascript
 $(document).ready(function(){
     $('div').height("200px"); //changes height
