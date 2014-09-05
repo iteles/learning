@@ -11,10 +11,26 @@ h1{
   padding: 0.2em;
 }
 
+h4{
+  color: #1199BB;
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+  font-weight: 300;
+  font-size: 1.5em;
+  padding: 0.5em;
+  color: #545454;
+}
+
 body{
   width: 95%;
   margin-left: auto;
   margin-right: auto;
+}
+
+p, a{
+  font-family: 'Helvetica', sans-serif;
+  font-size: 1em;
+  color: #545454;
+  line-height: 1.5;
 }
 
 /******************
@@ -44,6 +60,40 @@ main{
   clear:both;
 }
 
+/*Hide class will be used to determine what is shown in each column*/
+.hide {
+  display: none;
+}
+
+#available, #unavailable{
+  width: 42%;
+  float:left;
+  margin-top: 2em;
+}
+
+.instagram, .facebook, .github, .twitter, .pinterest{
+  overflow: hidden; /*forces containment of floats within*/
+}
+
+.instagram img, .facebook img, .github img, .twitter img, .pinterest img {
+  float: left;
+  height: 3em;
+}
+
+.instagram a, .facebook a, .github a, .twitter a, .pinterest a {
+  float: left;
+  padding: 0.8em;
+}
+
+.positive-result{
+  color: #33CCAA;
+  font-weight: bold;
+}
+
+.negative-result{
+  color: #FF3300;
+  font-weight: bold;
+}
 
 /******************
 FOOTER
@@ -55,6 +105,7 @@ footer {
   position: fixed;
   background-color:#00AAAA;
   padding: 0.2em;
+  width: 95%;
 }
 
 footer p {
@@ -69,5 +120,9 @@ footer p {
 
 footer a {
   color: #ffffff;
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+  font-weight: 300;
+  font-size: 1em;
+  text-transform: uppercase;
   text-decoration: underline;
 }
