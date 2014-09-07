@@ -60,24 +60,32 @@ main{
   clear:both;
 }
 
-/*Hide class will be used to determine what is shown in each column*/
+/*ZZZ - Hide class will be used to determine what is shown in each column, remove if not in use*/
 .hide {
   display: none;
 }
 
-#available, #unavailable{
-  width: 42%;
-  float:left;
-  margin-top: 2em;
+/*If screen is not mobile-size, these two divs should float next to each other*/
+@media screen and (min-width: 40.5em) {
+  #available, #unavailable{
+    width: 42%;
+    float:left;
+    margin-top: 2em;
+  }
 }
-
 .instagram, .facebook, .github, .twitter, .pinterest{
   overflow: hidden; /*forces containment of floats within*/
 }
 
 .instagram img, .facebook img, .github img, .twitter img, .pinterest img {
   float: left;
-  height: 3em;
+  height: 2em;
+}
+
+@media screen and (min-width: 40.5em) {
+  .instagram img, .facebook img, .github img, .twitter img, .pinterest img {
+    height: 3em;
+  }
 }
 
 .instagram a, .facebook a, .github a, .twitter a, .pinterest a {
