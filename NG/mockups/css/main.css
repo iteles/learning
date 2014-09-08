@@ -61,7 +61,7 @@ main{
 }
 
 /*ZZZ - Hide class will be used to determine what is shown in each column, remove if not in use*/
-.hide {
+.hidden {
   display: none;
 }
 
@@ -79,13 +79,7 @@ main{
 
 .instagram img, .facebook img, .github img, .twitter img, .pinterest img {
   float: left;
-  height: 2em;
-}
-
-@media screen and (min-width: 40.5em) {
-  .instagram img, .facebook img, .github img, .twitter img, .pinterest img {
-    height: 3em;
-  }
+  height: 3em;
 }
 
 .instagram a, .facebook a, .github a, .twitter a, .pinterest a {
