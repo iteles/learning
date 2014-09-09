@@ -65,6 +65,34 @@ main{
   display: none;
 }
 
+  /******************
+  SEARCHBOX
+  ******************/
+*:focus {outline: none;}
+
+#search-form input{
+  height: 1.6em;
+  width: 70%;
+  padding: 0.5em 0.3em;
+}
+
+#search-form button{
+  height: 2.6em;
+  padding: 0.5em;
+  margin: 0.5em;
+  background-color: #007799;
+  text-transform:uppercase;
+  color: #FFFFFF;
+}
+
+@media screen and (min-width: 40.5em) {
+  #search-form button{
+    height: 3em;
+  }
+}
+  /******************
+  SEARCH RESULTS
+  ******************/
 /*If screen is not mobile-size, these two divs should float next to each other*/
 @media screen and (min-width: 40.5em) {
   #available, #unavailable{
@@ -82,7 +110,7 @@ main{
   height: 3em;
 }
 
-.instagram a, .facebook a, .github a, .twitter a, .pinterest a, .instagram-unavailable a, .facebook-unavailable a, .githubv a, .twitter-unavailable a, .pinterest-unavailable a {
+.instagram a, .facebook a, .github a, .twitter a, .pinterest a, .instagram-unavailable a, .facebook-unavailable a, .github a, .twitter-unavailable a, .pinterest-unavailable a {
   float: left;
   padding: 0.8em;
 }
