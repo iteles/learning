@@ -60,7 +60,7 @@ main{
   clear:both;
 }
 
-/*ZZZ - Hide class will be used to determine what is shown in each column, remove if not in use*/
+/*Hidden class will be used to determine what is shown in each column, remove if not in use*/
 .hidden {
   display: none;
 }
@@ -73,16 +73,16 @@ main{
     margin-top: 2em;
   }
 }
-.instagram, .facebook, .github, .twitter, .pinterest{
+.instagram, .facebook, .github, .twitter, .pinterest, .instagram-unavailable, .facebook-unavailable, .github-unavailable, .twitter-unavailable, .pinterest-unavailable{
   overflow: hidden; /*forces containment of floats within*/
 }
 
-.instagram img, .facebook img, .github img, .twitter img, .pinterest img {
+.instagram img, .facebook img, .github img, .twitter img, .pinterest img, .instagram-unavailable img, .facebook-unavailable img, .github-unavailable img, .twitter-unavailable img, .pinterest-unavailable img {
   float: left;
   height: 3em;
 }
 
-.instagram a, .facebook a, .github a, .twitter a, .pinterest a {
+.instagram a, .facebook a, .github a, .twitter a, .pinterest a, .instagram-unavailable a, .facebook-unavailable a, .githubv a, .twitter-unavailable a, .pinterest-unavailable a {
   float: left;
   padding: 0.8em;
 }
