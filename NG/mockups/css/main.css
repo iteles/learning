@@ -15,9 +15,15 @@ h4{
   color: #1199BB;
   font-family: 'Yanone Kaffeesatz', sans-serif;
   font-weight: 300;
-  font-size: 1.5em;
+  font-size: 1.2em;
   padding: 0.5em;
   color: #545454;
+}
+
+@media screen and (min-width: 40.5em) {
+  h4{
+    font-size: 1.5em;
+  }
 }
 
 body{
@@ -28,9 +34,15 @@ body{
 
 p, a{
   font-family: 'Helvetica', sans-serif;
-  font-size: 1em;
+  font-size: 0.8em;
   color: #545454;
   line-height: 1.5;
+}
+
+@media screen and (min-width: 40.5em) {
+  p, a{
+    font-size: 1em;
+  }
 }
 
 /******************
@@ -66,6 +78,13 @@ main{
 }
 
   /******************
+  DESCRIPTION
+  ******************/
+#description{
+  margin-bottom: 0.3em;
+}
+
+  /******************
   SEARCHBOX
   ******************/
 *:focus {outline: none;}
@@ -78,18 +97,23 @@ main{
 
 #search-form button{
   height: 2.6em;
-  padding: 0.5em;
+  padding: 0.5em 0.8em;
   margin: 0.5em;
   background-color: #007799;
   text-transform:uppercase;
   color: #FFFFFF;
+  border-radius: 1%;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border: 1px solid white;
 }
 
 @media screen and (min-width: 40.5em) {
   #search-form button{
-    height: 3em;
+    height: 3.2em;
   }
 }
+
   /******************
   SEARCH RESULTS
   ******************/
@@ -103,16 +127,29 @@ main{
 }
 .instagram, .facebook, .github, .twitter, .pinterest, .instagram-unavailable, .facebook-unavailable, .github-unavailable, .twitter-unavailable, .pinterest-unavailable{
   overflow: hidden; /*forces containment of floats within*/
+  margin-bottom: 0.3em;
 }
 
 .instagram img, .facebook img, .github img, .twitter img, .pinterest img, .instagram-unavailable img, .facebook-unavailable img, .github-unavailable img, .twitter-unavailable img, .pinterest-unavailable img {
   float: left;
-  height: 3em;
+  height: 2em;
 }
 
-.instagram a, .facebook a, .github a, .twitter a, .pinterest a, .instagram-unavailable a, .facebook-unavailable a, .github a, .twitter-unavailable a, .pinterest-unavailable a {
+@media screen and (min-width: 40.5em) {
+  .instagram img, .facebook img, .github img, .twitter img, .pinterest img, .instagram-unavailable img, .facebook-unavailable img, .github-unavailable img, .twitter-unavailable img, .pinterest-unavailable img {
+    height: 3em;
+  }
+}
+
+.instagram a, .facebook a, .github a, .twitter a, .pinterest a, .instagram-unavailable a, .facebook-unavailable a, .github-unavailable a, .twitter-unavailable a, .pinterest-unavailable a {
   float: left;
-  padding: 0.8em;
+  padding: 0.3em 0.8em 0.3em 0.8em;
+}
+
+@media screen and (min-width: 40.5em) {
+  .instagram a, .facebook a, .github a, .twitter a, .pinterest a, .instagram-unavailable a, .facebook-unavailable a, .github-unavailable a, .twitter-unavailable a, .pinterest-unavailable a {
+    padding: 0.8em;
+  }
 }
 
 .positive-result{
@@ -132,10 +169,16 @@ FOOTER
 footer {
   clear:both;
   bottom: 0;
-  position: fixed;
   background-color:#00AAAA;
   padding: 0.2em;
   width: 95%;
+  margin-top: 1em;
+}
+
+@media screen and (min-width: 40.5em) {
+    footer{
+      position:fixed;
+    }
 }
 
 footer p {
