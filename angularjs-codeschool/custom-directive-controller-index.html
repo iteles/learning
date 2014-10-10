@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="gemStore">
+  <head>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+    <script type="text/javascript" src="angular.min.js"></script>
+    <script type="text/javascript" src="custom-directive-controller-app.js"></script>
+  </head>
+
+  <body ng-controller="StoreController as store">
+    <!--  Store Header  -->
+    <header>
+      <h1 class="text-center">Flatlander Crafted Gems</h1>
+      <h2 class="text-center">– an Angular store –</h2>
+    </header>
+
+    <!--  Products Container  -->
+    <div class="list-group">
+      <!--  Product Container  -->
+      <div class="list-group-item" ng-repeat="product in store.products">
+        <h3>{{product.name}} <em class="pull-right">{{product.price | currency}}</em></h3>
+
+        <!-- Image Gallery  -->
+        <div ng-controller="GalleryController as gallery"  ng-show="product.images.length">
+          <div class="img-wrap">
+            <img ng-src="{{product.images[gallery.current]}}" />
+          </div>
+          <ul class="img-thumbnails clearfix">
+            <li class="small-image pull-left thumbnail" ng-repeat="image in product.images">
+              <img ng-src="{{image}}" />
+            </li>
+          </ul>
+        </div>
+
+        <!-- ************************  -->
+        <!-- THIS IS THE IMPORTANT PART FOR THIS PARTICULAR EXERCISE -->
+        <!-- ************************  -->
+        <product-tabs> <!-- This custom element calls the custom directive productTabs, which in turn contains reference to the HTML template to be inserted AND the controller to be used -->
+        </product-tabs>
+
+        <!-- ************************  -->
+        <!-- ************************  -->
+      </div>
+
+    </div>
+  </body>
+</html>
