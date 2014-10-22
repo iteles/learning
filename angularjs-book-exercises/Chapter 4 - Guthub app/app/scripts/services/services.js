@@ -9,6 +9,9 @@ services.factory('Recipe', ['$resource',
     //.remove() & .delete() methods which return a single Recipe as well as
     //.query() which returns an array of recipes
 
+    //USAGE: when creating a new recipe, your controller states $scope.recipe = new Recipe
+    //which allows it to then be creating a *resource* with all associated and useful methods
+
     //'recipes/:id' means you can call any of the above methods on a Recipe object
     //and if you pass it an id, e.g. Recipe.get({id:1}), it will make a call to recipes/1
     //{id: '@id'} tells the method you call to pick the id from the URL and use it as the
