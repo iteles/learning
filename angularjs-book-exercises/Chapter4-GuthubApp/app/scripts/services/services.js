@@ -1,6 +1,6 @@
 var services = angular.module('guthub.services', ['ngResource']);
 
-//returns our recipe as an Angular Resource - a RESTful resource which point at
+//returns our Recipe as an Angular Resource - a RESTful resource which point at
 //a RESTful server - which also encapsulates the lower level $http service so
 //you don't have to make explicit calls to it
 services.factory('Recipe', ['$resource',
