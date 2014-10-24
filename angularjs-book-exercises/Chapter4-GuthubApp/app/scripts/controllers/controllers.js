@@ -51,7 +51,7 @@ app.controller('ViewCtrl', ['$scope', '$location', 'recipe', function($scope, $l
   $scope.recipe = recipe;
 
   //this creates an edit() method which can be called on an HTML form (for example)
-  //like so: <form ng-submit="edit()"> - it takes the current recipe ID and changes
+  //like so: <form ng-submit="edit()"> - pressing this button takes the current recipe ID and changes
   //the view path to the equivalent edit view using the recipe ID in the path.
   //Angular then knows to automatically update to the right template because of the
   //routing configurations
