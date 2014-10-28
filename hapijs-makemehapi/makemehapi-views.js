@@ -16,7 +16,7 @@ var path = require('path');
 var server = Hapi.createServer('localhost', Number(process.argv[2] || 8080), options);
 
 server.route({
-    method: 'GET',   
+    method: 'GET',
     path: '/',  //?name= will be added after the home URL when this is run to send through the parameters to be used in the view template
     handler: {
 
@@ -35,7 +35,7 @@ server.start();
 
     // var Hapi = require('hapi');
     // var path = require('path');
-    
+
     // var options = {
     //     views: {
     //         path: path.join(__dirname + '/templates'),
@@ -44,9 +44,9 @@ server.start();
     //         }
     //     }
     // };
-    
+
     // var server = Hapi.createServer('localhost', Number(process.argv[2] || 8080), options);
-    
+
     // server.route({
     //     method: 'GET',
     //     path: '/',
@@ -54,5 +54,5 @@ server.start();
     //         view: 'template.html'
     //     }
     // });
-    
+
     // server.start()

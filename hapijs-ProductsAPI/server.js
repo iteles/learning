@@ -1,5 +1,5 @@
 var Hapi = require('hapi');
-var routes = require('./routes.js');
+var routes = require(__dirname +'/routes.js');
 
 var options = { };
 //If you plan to deploy your Hapi application to a PaaS provider, you must listen on host 0.0.0.0 rather than localhost or 127.0.0.1

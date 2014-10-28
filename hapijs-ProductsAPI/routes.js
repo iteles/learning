@@ -8,11 +8,24 @@ var Joi = require('joi');
 
 //ALTERED THE CODE here for Joi validation
 module.exports = [
-    { method: 'GET', path: '/products', config: { handler: getProducts, validate: { query: { name: Joi.string() } } } },
-    { method: 'GET', path: '/products/{id}', config: { handler: getProduct } },
-//there's an issue here with payLoad: 'parse' and also with validation
-    { method: 'POST', path: '/products', config: { handler: addProduct, payload: 'parse', validate: { payload: { name: Joi.string().min(3).required()} } } }
-    //removed validation from this POST method for now: validate: { payload: { name: Joi.string().min(3).required()} }
+    {  method: 'GET',
+       path: '/products',
+       config: {
+          handler: getProducts,
+          validate: { query: { name: Joi.string() } }
+          }
+    },
+    {  method: 'GET',
+       path: '/products/{id}',
+       config: { handler: getProduct }
+    },
+//there's an issue here with payload
+    {  method: 'POST',
+       path: '/products',
+       config: {
+         handler: addProduct,
+         payload: 'parse',
+         validate: { payload: { name: Joi.string().min(3).required()} } } }
 ];
 
 //using the validation method below rather than joi would require 'hapi.types' -> var Types = require('hapi').types;
