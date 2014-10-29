@@ -25,4 +25,22 @@ Below are some notes I made throughout.
 * To _include_ the template in your HTML use the syntax `{{ > templateName}}` - these are called **inclusions**
 * The name of the actual _file_ of your template isn't relevant, it's providing a `name` in the opening `<template>` tag, e.g. `<template name="templateName">` that meteor looks for
 * **Expressions** are in the format `{{title}}` return a property of the current object or the value of a template helper
-* **Block helpers** control parts of the template, e.g. `{{#each}}…{{/each}}` to iterate over objects or `{{#if}}…{{/if}}` to add things in conditionally 
+* **Block helpers** control parts of the template, e.g. `{{#each}}…{{/each}}` to iterate over objects or `{{#if}}…{{/if}}` to add things in conditionally
+
+* Templates and their logic are kept separate in Meteor, with the logic in _template helpers_
+  * Examples: `post_item.js` will hold the logic for the `postItem` template
+
+* As templates iterate through datasets with `{{#each}}…{{/each}}`, they assign each item in that array to `this` in turn, for example in our array of posts, `this` will be assigned to each post in turn so `this.url` will always refer to the `url` property of the **current** post that is being iterated over - this means that in the template helpers we can safely use `this.property` to refer to a property of our current item
+An example of a common but simple pattern used in template helpers:
+```javascript
+//holds postItem template's logic
+//returns {{domain}} and {{url}} for postItem template
+Template.postItem.helpers({
+  domain: function() {
+    var a = document.createElement('a');
+    a.href = this.url;  //returns full URL, e.g. http://sachagreif.com/introducing-telescope/
+    return a.hostname; //returns just domain, e.g sachagreif.com
+    //essentially domain = a.hostname & a.href=this.url
+  }
+});
+```
