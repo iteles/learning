@@ -16,6 +16,7 @@ Below are some notes I made throughout.
   * **public** - contains your _static assets_ like images, favicons and fonts
     * When referencing files in this folder there is no need to use _public/_, just _/<asset-name>_
   * **lib** - is loaded **before anything else**
+    * Collections will be kept in this folder as they will need to be accessed from both server and client
   * ** test**
 * Everything outside the _server_ and _client_ directories run on **both** server and client
 * Note: To write in [CoffeeScript](http://coffeescript.org/) rather than vanilla JavaScript, just make sure you add the CoffeeScript package to your app `meteor add coffeescript`
@@ -44,3 +45,29 @@ Template.postItem.helpers({
   }
 });
 ```
+
+###Collections
+* Collections are how Meteor keep data synchronised between the front and back end
+* They **store persistent data** by taking care of storing it in the permanent server-side and also provide access to all client browsers in realtime _without having to write a lot of server side code_
+* Collections live in the **/lib** folder to make sure they're always loaded first
+  * Also remember that because the _/lib_ folder is outside of the _/client_ and _/server_ folders, it will run on _both client and server_
+
+* [MongoDB](http://www.mongodb.org/) is the default server-side database for Meteor
+  * To **look inside your database**, open a separate terminal window while your meteor app is running, type `meteor mongo`
+  * This brings up the [Mongo Shell](http://docs.mongodb.org/v2.2/mongo/) which you can use with commands like
+* The collection **acts as an API** to your Mongo database, so you can write things like `Posts.insert()` in your server-side code
+
+
+
+
+
+
+
+
+
+###Further Notes
+* In Meteor, the `var` keyword limits the scope of the variable to the current file so you wouldn't use it for collections you want to be available for your whole app, e.g.
+```javascript
+Posts = new Mongo.collection('posts');
+```
+*
