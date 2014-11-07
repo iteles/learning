@@ -12,10 +12,10 @@ Router.route('/',
   {name: 'postsList'}
 );
 
-Router.route('/:_id',
+Router.route('/posts/:_id',
 //the '_id' here goes into the router's params array
   {name: 'postPage',
-    //thi data context passes the id in the current URL to the findOne function
+    //this data context passes the id in the current URL (this.params._id) to the findOne function
    data: function(){ return Posts.findOne(this.params._id); }
    }
 );
