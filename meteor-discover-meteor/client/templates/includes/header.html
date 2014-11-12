@@ -9,13 +9,20 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
+          <!-- {{pathFor }} is available through iron:router & ensures the path here is always up to date-->
           <a class="navbar-brand" href="{{pathFor 'postsList'}}">Microscope</a>
         </div>
+        <!--Each ul in this div is creating a new link in the navbar - uses Bootstrap 3-->
         <div class="collapse navbar-collapse" id="navigation">
+          <ul class="nav navbar-nav">
+            <!--if browser uses the /submit, meteor will display the postSubmit template-->
+            <li><a href="{{pathFor 'postSubmit'}}"> Submit Post </a></li>
+          </ul>
           <ul class="nav navbar-nav navbar-right">
             {{> loginButtons}}
           </ul>
         </div>
+
       </div>
     </nav>
 </template>
