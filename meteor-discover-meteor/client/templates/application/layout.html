@@ -1,10 +1,6 @@
 <template name="layout">
   <div class="container">
-    <header class="navbar navbar-default" role="navigation">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="/">Microscope</a>
-      </div>
-    </header>
+      {{> header}} <!--header is in includes-->
     <div id="main" class="row-fluid">
       <!-- yield is what we are defining as the route template-->
       {{> yield}}
