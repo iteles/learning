@@ -15,7 +15,7 @@ Template.postSubmit.events({
     //here we're creating the new post by passing it the url and title (within the post variable)
     post._id = Posts.insert(post);
 
-    //constructs a URL using the
+    //constructs a URL using the ID for the new post and calls the postPage template
     Router.go('postPage',{_id: post._id});
   }
 });
