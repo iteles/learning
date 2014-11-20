@@ -15,8 +15,10 @@
         <!--Each ul in this div is creating a new link in the navbar - uses Bootstrap 3-->
         <div class="collapse navbar-collapse" id="navigation">
           <ul class="nav navbar-nav">
-            <!--if browser uses the /submit, meteor will display the postSubmit template-->
-            <li><a href="{{pathFor 'postSubmit'}}"> Submit Post </a></li>
+            <!--Spacebars #if checks if the user is logged in & only displays this <li> if that's true-->
+            <!--if browser uses the /submit - defined as the path for the postSubmit template in the router
+            file, meteor will display the postSubmit template-->
+            {{#if currentUser}}<li><a href="{{pathFor 'postSubmit'}}"> Submit Post </a></li>{{/if}}
           </ul>
           <ul class="nav navbar-nav navbar-right">
             {{> loginButtons}}
