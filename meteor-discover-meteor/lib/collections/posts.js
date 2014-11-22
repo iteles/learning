@@ -1,5 +1,13 @@
 Posts = new Mongo.Collection("posts");
 
+Posts.allow({
+  //insert is actually done via the postInsert method - as it is a method, it bypasses the
+  //allow() so there's no point in having an allow statement for them
+  update: function(userId, post){ return ownsDocument(userId, post);},
+  remove: function(userId, post){ return ownsDocument(userId, post);}
+});
+
+
 Meteor.methods({
   //postInsert method: checks the userID, post title and URL (entered into submit form) are
   //strings, then add the current user's ID, name and current timestamp to the post. Finally
