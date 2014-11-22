@@ -15,9 +15,20 @@ Meteor.methods({
       url: String
     });
 
+    //****This section checks whether the URL already exists in the DB & exits the method if it does *****
+    var postWithSameLink = Posts.findOne(postAttributes.url);
+    //if there *is* a post with that URL already
+    if (postWithSameLink){
+      return {
+        //create a postExists attribute which you will use in the Method call and returns that with the id of the existing post
+        postExists: true,
+        _id:postWithSameLink._id
+      };
+    }
+    //********************************************
+
     //assigns the current user to a variable we can use
     var user = Meteor.user();
-
     //extend - part of the build in Underscore library - the postAttributes variable
     //by adding the user's id, username and the current date and time as a timestamp to it
     var post = _.extend(postAttributes,{
@@ -25,7 +36,6 @@ Meteor.methods({
         author: user.username,
         submitted: new Date()
     });
-
     //inserting a new post into the database yields the ID for the new post
     var postID = Posts.insert(post);
 

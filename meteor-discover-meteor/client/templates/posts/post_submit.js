@@ -17,6 +17,10 @@ Template.postSubmit.events({
         if (error)
           return alert(error.reason);
 
+        //postExists is set to true in the postInsert method if the submitted post already exists
+        if (result.postExists)
+          return alert('Post already exists');
+
         //constructs a URL using the ID for the new post and calls the postPage template
         Router.go('postPage', {_id: result._id});
       });
