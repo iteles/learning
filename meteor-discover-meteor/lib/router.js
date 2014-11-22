@@ -20,6 +20,12 @@ Router.route('/posts/:_id',
    }
 );
 
+Router.route('/posts/:_id/edit',
+  {name: 'postEdit',
+   data: function(){ return Posts.findOne(this.params._id);}
+  }
+);
+
 //ROUTE HOOK
 var requireLogin = function() {
   //if the user is not logged in

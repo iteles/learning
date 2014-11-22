@@ -2,6 +2,11 @@
 
 //returns {{domain}} and {{url}} for postItem template
 Template.postItem.helpers({
+  //new attribute created here to determine whether the current user is the owner/author of the post
+  ownPost: function(){
+    return this.userId === Meteor.userId();
+  },
+
   domain: function() {
     var a = document.createElement('a');
     a.href = this.url;  //returns full URL, e.g. http://sachagreif.com/introducing-telescope/
