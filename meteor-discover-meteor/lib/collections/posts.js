@@ -1,3 +1,8 @@
+//Structure of this file:
+//1. Define Mongo collection (for posts)
+//2. Define client-side allow() and deny()s
+//3. Define methods
+
 Posts = new Mongo.Collection("posts");
 
 Posts.allow({
@@ -7,6 +12,11 @@ Posts.allow({
   remove: function(userId, post){ return ownsDocument(userId, post);}
 });
 
+Posts.deny({
+  update: function(userId, post, fieldNames) {
+    // may only edit the following two fields:
+    return (_.without(fieldNames, 'url', 'title').length > 0); }
+});
 
 Meteor.methods({
   //postInsert method: checks the userID, post title and URL (entered into submit form) are
