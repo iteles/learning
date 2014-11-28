@@ -1,6 +1,7 @@
 <template name="layout">
   <div class="container">
       {{> header}} <!--header is in includes-->
+      {{> errors}} <!-- based on a local collection of error in the includes folder-->
     <div id="main" class="row-fluid">
       <!-- yield is what we are defining as the route template-->
       {{> yield}}

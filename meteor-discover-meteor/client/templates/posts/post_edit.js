@@ -11,7 +11,8 @@ Template.postEdit.events({
 
     Posts.update(currentPostId, {$set: postProperties}, function(err){
       if(err){
-        alert(err.reason);
+        //throwError() here replacing original alert(), function defined in templates/includes/errors.js
+        throwError(err.reason);
       }
       else{ Router.go('postPage', {_id: currentPostId}); }
     });

@@ -15,11 +15,13 @@ Template.postSubmit.events({
       Meteor.call('postInsert', post, function(error, result) {
         // display the error to the user and abort
         if (error)
-          return alert(error.reason);
+          //throwError function created in templates/includes/errors.js & uses errors.html template
+          //to show a little red box at the top of the screen
+          return throwError(error.reason);
 
         //postExists is set to true in the postInsert method if the submitted post already exists
         if (result.postExists)
-          return alert('Post already exists');
+          return throwError('Post already exists');
 
         //constructs a URL using the ID for the new post and calls the postPage template
         Router.go('postPage', {_id: result._id});

@@ -14,7 +14,8 @@ Posts.allow({
 
 Posts.deny({
   update: function(userId, post, fieldNames) {
-    // may only edit the following two fields:
+    //using underscore.js, returns the fieldnames that are passed in for updating *without* the url and title fields, so
+    //users may only edit the following two fields:
     return (_.without(fieldNames, 'url', 'title').length > 0); }
 });
 
