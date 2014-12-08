@@ -7,4 +7,10 @@
     {{/each}}
   </ul>
 
+  <!--if user is logged in-->
+  {{#if currentUser}}
+    {{> commentSubmit}}
+  {{else}}
+    <p>Please log in to leave a comment.</p>
+  {{/if}}
 </template>
