@@ -3,7 +3,7 @@ Router.configure(
     layoutTemplate: 'layout',
     loadingTemplate: 'loading',
     waitOn: function(){
-      return [Meteor.subscribe('posts'), Meteor.subscribe('comments')];
+      return Meteor.subscribe('posts');
     }
   }
 );
@@ -15,6 +15,11 @@ Router.route('/',
 Router.route('/posts/:_id',
 //the '_id' here goes into the router's params array
   {name: 'postPage',
+
+   waitOn: function(){
+     //passing in this.params._id so the only comments we subscribe to are the ones relevant to the post we're seeing
+     return Meteor.subscribe('comments', this.params._id);
+   },
     //this data context passes the id in the current URL (this.params._id) to the findOne function
    data: function(){ return Posts.findOne(this.params._id); }
    }
