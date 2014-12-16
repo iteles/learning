@@ -19,5 +19,8 @@ Meteor.methods({
       submitted: new Date()
     });
 
+    //update the post's commentCount variable to show the added comment
+    Posts.update(comment.postId, {$incl:{commentCount: 1}});
+
   return Comments.insert(comment); }
 });

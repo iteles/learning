@@ -22,6 +22,11 @@ db.users.count()
 * `Meteor.user()` is _true_ if the user is logged in
 * [`Meteor.loggingIn()`](https://docs.meteor.com/#/full/meteor_users) is _true_ if a login process is currently underway (useful for things like knowing not to display an 'access denied' sign for a not-logged-in user when the user is in actual fact already in the process of logging in) - p.119
 
+```javascript
+//in Mongo shell, $inc operator increments a field by a specified amount
+{ $inc: { <field1>: <amount1>, <field2>: <amount2>, ... } }
+```
+
 ##Spacebars tidbits
 * `currentUser` is the Spacebars equivalent of `Meteor.user()` and is _true_ if the user is logged in
   * It's provided by the `accounts` package

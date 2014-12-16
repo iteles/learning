@@ -53,7 +53,9 @@ Meteor.methods({
     var post = _.extend(postAttributes,{
         userId: user._id,
         author: user.username,
-        submitted: new Date()
+        submitted: new Date(),
+        //ensures new posts start with zero comments
+        commentsCount: 0
     });
     //inserting a new post into the database yields the ID for the new post
     var postID = Posts.insert(post);

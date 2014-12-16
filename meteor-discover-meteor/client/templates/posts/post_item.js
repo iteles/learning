@@ -12,11 +12,8 @@ Template.postItem.helpers({
     a.href = this.url;  //returns full URL, e.g. http://sachagreif.com/introducing-telescope/
     return a.hostname; //returns just domain, e.g sachagreif.com
     //essentially domain = a.hostname & a.href=this.url
-  },
-
-  commentCount: function(){
-    return Comments.find(this._id).count();
   }
+
 });
 
 //As the postItem template iterates over the posts array, at each post it will assign 'this.'
