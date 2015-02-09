@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8>
+  <title>First Component</title>
+</head>
+<body>
+
+  <!-- container node -->
+  <div id="app"></div>
+
+  <script src="http://fb.me/react-0.11.1.js"></script>
+  <script src="http://fb.me/JSXTransformer-0.11.1.js"></script>
+  <script type="text/jsx">
+  /** @jsx React.DOM */
+  //this comment above is what links JSX and React together & is very picky
+  //this is the pragma and is no longer needed in React 0.12+
+
+  //define component using React's createClass()
+  //createClass() doesn't render component! Defines & returns function we can use
+  //to create the component
+  var MessageBox = React.createClass({
+
+    //describe component's structure in the DOM - this is where JSX goes
+    //needs to return a node
+    render: function(){
+      //To return more than one HTML node, you can wrap them in a div
+      return (
+      <div>
+        <h1>Hello, World</h1>;
+      </div>
+    );
+    }
+  });
+
+  //renderComponent() uses the function returned from createClass to render component
+  React.renderComponent(
+    <MessageBox></MessageBox>,
+    document.getElementById('app'),
+    //optional callback
+    function() {
+      console.log('This callback will fire once the component has rendered');
+    }
+  )
+
+  </script>
+</body>
+</html>
