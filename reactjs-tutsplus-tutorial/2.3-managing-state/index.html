@@ -1,0 +1,78 @@
+<!--React.DOM is a little bulkier and the structure is harder to spot straight
+away but it also doesn't add HTML to the JS. JSX is more succinct & is visually easier to
+follow along -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8>
+  <title>First Component</title>
+</head>
+<body>
+
+  <!-- container node -->
+  <div id="app"></div>
+
+  <script src="http://fb.me/react-0.11.1.js"></script>
+  <script src="http://fb.me/JSXTransformer-0.11.1.js"></script>
+  <script type="text/jsx">
+  /** @jsx React.DOM */
+
+  //TO HAVE THIS EXAMPLE WORK:
+  //In the browser console, change the isRed and messageh1 properties by setting them in the state
+  //reactComponent.setState({
+  //   isRed: false,
+  //   messageh1: 'Hooray!'
+  // });
+
+
+  var MessageBox = React.createClass({
+
+    //this will set the initial state of the isRed and messageh1 properties
+    getInitialState: function(){
+      return{
+        isRed: true,
+        //the title usually wouldn't be a property of state, but this is illustrative
+        messageh1: 'New message title!'
+      }
+    },
+
+    render: function() {
+
+      //will be added as inline style below
+      //if the isRed property in state is set to true it'll be red, else blue.
+      var inlineStyle = {
+        color: this.state.isRed ? 'red' : 'blue'
+      };
+
+      //contents of {} defined in state (above or in the browser console for this example)
+      return (
+        <div className="container" style={inlineStyle}>
+          <h1>{this.state.messageh1}</h1>
+
+          <SubMessage />
+        </div>
+      ); //end of container div
+    } //end of render
+  });
+
+  var SubMessage = React.createClass({
+    render: function(){
+      return (
+        <p>I am the submessage.</p>
+      );
+    }
+  })
+
+  var reactComponent = React.renderComponent(
+    //render as a function
+    <MessageBox />,
+    document.getElementById('app'),
+    function(){
+      console.log('Finished rendering component');
+    }
+  );
+
+  </script>
+</body>
+</html>
