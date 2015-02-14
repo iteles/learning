@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8>
+  <title>First Component</title>
+</head>
+<body>
+
+  <!-- container node -->
+  <div id="app"></div>
+
+  <script src="http://fb.me/react-0.11.1.js"></script>
+  <script src="http://fb.me/JSXTransformer-0.11.1.js"></script>
+  <script type="text/jsx">
+  /** @jsx React.DOM */
+
+  var MessageBox = React.createClass({
+    //props can be set from a top-level component (like MessageBox)'s state
+    getInitialState: function(){
+      return{
+        isRed: true,
+        //the goal is to have a submessage for each one of these items in the array
+        messages: ['Message 1', 'Message 2', 'Message 3', 'Message 4' ]
+      }
+    },
+
+    render: function() {
+      var inlineStyle = {
+        color: this.state.isRed ? 'red' : 'blue'
+      };
+
+      //iterates over the messages in the array and returns a new array from it
+      var messages = this.state.messages.map(function(message){
+        //return Submessage with our message prop as before, but we're setting the
+        //{expression} to be the message we're passing in through the function
+        return <SubMessage message={message}/>
+      })
+
+      //messages is then added below
+      return (
+        <div className="container" style={inlineStyle}>
+          <h1>Hello World</h1>
+
+          {messages}
+        </div>
+      ); //end of container div
+    } //end of render
+  });
+
+  var SubMessage = React.createClass({
+
+    propTypes: {
+      message: React.PropTypes.string.isRequired
+    },
+
+    getDefaultProps: function(){
+      return{
+        message: "It's good to see you!"
+      }
+    },
+
+    render: function(){
+      return (
+        <p>{this.props.message}</p>
+      );
+    }
+  });
+
+  var message = "Yo!"
+
+  var reactComponent = React.renderComponent(
+    <MessageBox/>,
+    document.getElementById('app'),
+    function(){
+      console.log('Finished rendering component');
+    }
+  );
+
+  </script>
+</body>
+</html>
