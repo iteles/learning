@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8>
+  <title>First Component</title>
+</head>
+<body>
+
+  <!-- container node -->
+  <div id="app"></div>
+
+  <script src="http://fb.me/react-0.11.1.js"></script>
+  <script src="http://fb.me/JSXTransformer-0.11.1.js"></script>
+  <script type="text/jsx">
+  /** @jsx React.DOM */
+
+  var MessageBox = React.createClass({
+    //not being used for the props portion of the tutorial
+    getInitialState: function(){
+      return{
+        isRed: true,
+        messageh1: 'New message title!'
+      }
+    },
+
+    render: function() {
+      var inlineStyle = {
+        color: this.state.isRed ? 'red' : 'blue'
+      };
+
+      //changed to null to see what happens with the validation
+      var subMessage = null;
+
+      return (
+        <div className="container" style={inlineStyle}>
+          <h1>Hello World</h1>
+
+          <SubMessage message={subMessage}/>
+        </div>
+      ); //end of container div
+    } //end of render
+  });
+
+  var SubMessage = React.createClass({
+
+    //validation on the message props, ensuring it's a string and required
+    //will not get an error if you don't provide a string though, everything still
+    //works but you get a _warning_ in the console
+    propTypes: {
+      message: React.PropTypes.string.isRequired
+    },
+
+    getDefaultProps: function(){
+      return{
+        message: "It's good to see you!"
+      }
+    },
+
+    render: function(){
+      return (
+        <p>{this.props.message}</p>
+      );
+    }
+  });
+
+  var message = "Yo!"
+
+  var reactComponent = React.renderComponent(
+    <MessageBox/>,
+    document.getElementById('app'),
+    function(){
+      console.log('Finished rendering component');
+    }
+  );
+
+  </script>
+</body>
+</html>
