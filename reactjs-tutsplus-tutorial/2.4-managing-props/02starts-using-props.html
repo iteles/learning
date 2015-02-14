@@ -1,0 +1,80 @@
+<!--React.DOM is a little bulkier and the structure is harder to spot straight
+away but it also doesn't add HTML to the JS. JSX is more succinct & is visually easier to
+follow along -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8>
+  <title>First Component</title>
+</head>
+<body>
+
+  <!-- container node -->
+  <div id="app"></div>
+
+  <script src="http://fb.me/react-0.11.1.js"></script>
+  <script src="http://fb.me/JSXTransformer-0.11.1.js"></script>
+  <script type="text/jsx">
+  /** @jsx React.DOM */
+
+  //ACTUALLY STARTS USING PROPS
+
+  var MessageBox = React.createClass({
+
+    //not being used for the props portion of the tutorial
+    getInitialState: function(){
+      return{
+        isRed: true,
+        messageh1: 'New message title!'
+      }
+    },
+
+    render: function() {
+      var inlineStyle = {
+        color: this.state.isRed ? 'red' : 'blue'
+      };
+
+      var subMessage="I'm the submessage variable, not the default prop."
+
+      //within this return, MessageBox is setting the props of the SubMessage,
+      //therefore it's the OWNER of SubMessage
+      return (
+        <div className="container" style={inlineStyle}>
+          <h1>Hello World</h1>
+
+          //sets the message property of the SubMessage to the variable subMessage
+          <SubMessage message={subMessage}/>
+        </div>
+      ); //end of container div
+    } //end of render
+  });
+
+  var SubMessage = React.createClass({
+    //sets the default value for props
+    getDefaultProps: function(){
+      return{
+        message: "It's good to see you!"
+      }
+    },
+
+    render: function(){
+      return (
+        <p>{this.props.message}</p>
+      );
+    }
+  });
+
+  var message = "Yo!"
+
+  var reactComponent = React.renderComponent(
+    <MessageBox/>,
+    document.getElementById('app'),
+    function(){
+      console.log('Finished rendering component');
+    }
+  );
+
+  </script>
+</body>
+</html>
