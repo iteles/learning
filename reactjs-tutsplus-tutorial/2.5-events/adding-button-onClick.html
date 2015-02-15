@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8>
+  <title>First Component</title>
+</head>
+<body>
+
+  <!-- container node -->
+  <div id="app"></div>
+
+  <script src="http://fb.me/react-0.11.1.js"></script>
+  <script src="http://fb.me/JSXTransformer-0.11.1.js"></script>
+  <script type="text/jsx">
+  /** @jsx React.DOM */
+
+//Here we're just adding the button and setting up the handler function, in the next
+//section we'll add the text box that will provide the text to add
+
+  var MessageBox = React.createClass({
+
+    //handleAdd is event handler (hence passing in the e) used below in the render
+    //function, so it's going to return an event
+    handleAdd: function(e){
+      //logging the `target` shows you what the target that was clicked is
+      console.log(e.target);
+      //also note that React always build `this` to the React Component
+      //so the below will log out our component to the console
+      console.log(this);
+    },
+
+    getInitialState: function(){
+      return{
+        isRed: true,
+        messages: ['Message 1', 'Message 2', 'Message 3', 'Message 4' ]
+      }
+    },
+
+    render: function() {
+      var inlineStyle = {
+        color: this.state.isRed ? 'red' : 'blue'
+      };
+
+      var messages = this.state.messages.map(function(message){
+        return <SubMessage message={message}/>
+      })
+
+      //adding a new button to allow users to add new messages to the list
+      //onClick (with camel case) is what React uses & is different to JS
+      //camel casing is common in React for all event types
+      return (
+        <div className="container" style={inlineStyle}>
+          <h1>Hello World</h1>
+
+          <button className="btn btn-primary" onClick={this.handleAdd}>Add message</button>
+
+          {messages}
+        </div>
+      ); //end of container div
+    } //end of render
+  });
+
+  //END OF MessageBox
+
+  var SubMessage = React.createClass({
+
+    propTypes: {
+      message: React.PropTypes.string.isRequired
+    },
+
+    getDefaultProps: function(){
+      return{
+        message: "It's good to see you!"
+      }
+    },
+
+    render: function(){
+      return (
+        <p>{this.props.message}</p>
+      );
+    }
+  });
+
+  var message = "Yo!"
+
+  var reactComponent = React.renderComponent(
+    <MessageBox/>,
+    document.getElementById('app'),
+    function(){
+      console.log('Finished rendering component');
+    }
+  );
+
+  </script>
+</body>
+</html>
