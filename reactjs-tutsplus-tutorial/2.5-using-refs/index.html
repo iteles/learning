@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8>
+  <title>First Component</title>
+</head>
+<body>
+
+  <!-- container node -->
+  <div id="app"></div>
+
+  <script src="http://fb.me/react-0.11.1.js"></script>
+  <script src="http://fb.me/JSXTransformer-0.11.1.js"></script>
+  <script type="text/jsx">
+  /** @jsx React.DOM */
+
+  var MessageBox = React.createClass({
+
+    handleAdd: function(e){
+      //this.refs.newMessage returns the newMessage component
+      //using the getDOMNode(), it returns the actual DOM node the refs is attached to
+      //so here, when the button is clicked, it will use the handleAdd function to get the
+      //value from the DOM node refs is attached to and assign it to the newMessage variable
+      var newMessage = this.refs.newMessage.getDOMNode().value;
+      console.log(newMessage);
+
+      //now we want to add this new message to our state
+      //we can't add things to the state directly so we create a copy of the state array & add in newMessage
+      var newStateArray = this.state.messages.concat([newMessage]);
+      this.setState({
+        messages: newStateArray
+      });
+      //because the messages array is what is being shown in as our list below, changing this
+      //now adds the text that is input into the array and this is automatically displayed onscreen
+
+    },
+
+    getInitialState: function(){
+      return{
+        isRed: true,
+        messages: ['Message 1', 'Message 2', 'Message 3', 'Message 4' ]
+      }
+    },
+
+    render: function() {
+      var inlineStyle = {
+        color: this.state.isRed ? 'red' : 'blue'
+      };
+
+      var messages = this.state.messages.map(function(message){
+        return <SubMessage message={message}/>
+      })
+
+      //added ref to input text box, accessed through this.refs.newMessage in the handleAdd function
+      return (
+        <div className="container" style={inlineStyle}>
+          <h1>Hello World</h1>
+          <input ref="newMessage" type="text"/>
+          <button className="btn btn-primary" onClick={this.handleAdd}>Add message</button>
+          {messages}
+        </div>
+      ); //end of container div
+    } //end of render
+  });
+
+  //END OF MessageBox
+
+  var SubMessage = React.createClass({
+
+    propTypes: {
+      message: React.PropTypes.string.isRequired
+    },
+
+    getDefaultProps: function(){
+      return{
+        message: "It's good to see you!"
+      }
+    },
+
+    render: function(){
+      return (
+        <p>{this.props.message}</p>
+      );
+    }
+  });
+
+  var message = "Yo!"
+
+  var reactComponent = React.renderComponent(
+    <MessageBox/>,
+    document.getElementById('app'),
+    function(){
+      console.log('Finished rendering component');
+    }
+  );
+
+  </script>
+</body>
+</html>
