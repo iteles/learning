@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8>
+  <title>First Component</title>
+</head>
+<body>
+
+  <!-- container node -->
+  <div id="app"></div>
+
+  <script src="http://fb.me/react-0.11.1.js"></script>
+  <script src="http://fb.me/JSXTransformer-0.11.1.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.js"></script>
+  <script type="text/jsx">
+  /** @jsx React.DOM */
+
+  var MessageBox = React.createClass({
+
+    handleAdd: function(e){
+      var newMessage = this.refs.newMessage.getDOMNode().value;
+      console.log(newMessage);
+
+      var newStateArray = this.state.messages.concat([newMessage]);
+      this.setState({
+        messages: newStateArray
+      });
+    },
+
+    deleteMessage: function(message){
+      //return the new messages array which includes all the items in the array except the one we're
+      //trying to delete
+      console.log('Deleting message!')
+      //_.without is a lodash method where 1st param is original array & 2nd is the item we want to remove
+      var newMessages = _.without(this.state.messages, message);
+      this.setState({
+        messages : newMessages
+      });
+    },
+
+    getInitialState: function(){
+      return{
+        isRed: true,
+        messages: ['Message 1', 'Message 2', 'Message 3', 'Message 4' ]
+      }
+    },
+
+    render: function() {
+      var inlineStyle = {
+        color: this.state.isRed ? 'red' : 'blue'
+      };
+
+      var messages = this.state.messages.map(function(message){
+        //context of 'this' used below whilst *inside* the map function is the window, but we want
+        //it to be the component, so we use bind() to bind the function to 'this' *outside* of map
+        //where the context is the component - what we want - and not the window. Otherwise deleteMessage
+        //is undefined because it only exists in the context of the component, no the window.
+        return <SubMessage message={message} onDelete={this.deleteMessage}/>
+        //NOTE also: onDelete is our 'callback function' which is passed down to our owned component SubMessage
+        //through props
+      }.bind(this));
+
+      //added ref to input text box, accessed through this.refs.newMessage in the handleAdd function
+      return (
+        <div className="container" style={inlineStyle}>
+          <h1>Hello World</h1>
+          <input ref="newMessage" type="text"/>
+          <button className="btn btn-primary" onClick={this.handleAdd}>Add message</button>
+          {messages}
+        </div>
+      ); //end of container div
+    } //end of render
+  });
+
+  //END OF MessageBox component
+
+  //note SubMessage doesn't have a state, it relies on the props passed to it by its owner, MessageBox
+  //can't set state in an owned component but can send message using a callback
+  var SubMessage = React.createClass({
+
+    //can't directly access out state from here - sent down from owner through props
+    handleDelete: function(e){
+      console.log('Props in subMessage:'+this.props);
+      console.log(this.props.onDelete(this.props.message));
+    },
+
+    propTypes: {
+      message: React.PropTypes.string.isRequired
+    },
+
+    getDefaultProps: function(){
+      return{
+        message: "It's good to see you!"
+      }
+    },
+
+    //handleDelete is defined within this component, but gets state passed down through a callback
+    render: function(){
+      return (
+        <div>
+          <p>{this.props.message}</p>
+          <button onClick={this.handleDelete} className="btn btn-danger">Delete</button>
+        </div>
+      );
+    }
+  });
+
+  var message = "Yo!"
+
+  var reactComponent = React.renderComponent(
+    <MessageBox/>,
+    document.getElementById('app'),
+    function(){
+      console.log('Finished rendering component');
+    }
+  );
+
+  </script>
+</body>
+</html>
