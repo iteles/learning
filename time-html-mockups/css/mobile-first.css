@@ -1,4 +1,6 @@
-/* CSS declarations go here */
+/*==============================
+  GENERAL STYLES
+================================*/
 
 /*https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/*/
 html {
@@ -14,25 +16,40 @@ body{
   color: #403f3f;
 }
 
-#main .timer-time {
-  font-size: 2.5em;
+p {
+  margin: 0;
 }
 
-#main .timer-desc {
-  font-size: 1em;
+/*==============================
+  Section | MAIN
+================================*/
+#main {
+  width: 100%;
+  padding: 0.5em;
+  background: #EEE8E8;
 }
 
-#main button {
+  #main .timer-time {
+    font-size: 3em;
+    text-align: center;
+    overflow: auto;
+  }
+
+    #main .timer-time p {
+      display: inline-block;
+    }
+
+  #main .timer-desc {
+    font-size: 0.8em;
+    text-align: center;
+  }
+
+.timer-time button {
   border-radius: 50%;
   background: #464646;
   padding: 0.75em;
+  margin: 1.5em 1em;
   color: #f5f5f5;
   border: 2px solid #f5f5f5;
   float: right;
-  /* overflow: hidden; */
-  /* box-shadow: 0 0 3px gray; */
 }
-
-
-/*font-family: 'Open Sans Condensed', sans-serif;
-font-family: 'Open Sans', sans-serif;*/
