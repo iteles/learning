@@ -44,8 +44,10 @@ p {
       margin: 1em;
       color: #f5f5f5;
       border: 2px solid #f5f5f5;
-      vertical-align: middle;
-      /*display:inline-block;*/
+      position: fixed;
+      top: 1.3em;
+      right: 0.5em;
+
     }
 
     #main .timer-time p {
