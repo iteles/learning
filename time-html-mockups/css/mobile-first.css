@@ -21,7 +21,7 @@ p {
 }
 
 /*==============================
-  Section | MAIN
+  Section | MAIN (current timer)
 ================================*/
 #main {
   width: 100%;
@@ -30,11 +30,11 @@ p {
   text-align: center;
 }
 
+/*======== Timer time ========*/
   #main .timer-time {
     font-size: 3em;
     display: inline-block;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
   }
 
     .timer-time button {
@@ -47,17 +47,36 @@ p {
       position: fixed;
       top: 1.3em;
       right: 0.5em;
-
     }
 
-    #main .timer-time p {
-      display: inline-block;
-    }
-
-  #main .timer-desc {
-    font-size: 0.8em;
-    text-align: center;
+/*======== Timer description ========*/
+  #main .timer-desc{
+    display: block;
+    margin: 0 auto;
   }
+
+    #main .timer-desc input{
+      font-size: 0.9em;
+      font-family: 'Open Sans', sans-serif;
+      text-align: center;
+      background: none;
+      border:0;
+      border-bottom: 1px solid #848484;
+      border-radius: 0; /*iOS shows curves on border without this*/
+    }
+
+      #main .timer-desc input:focus{
+          outline:0;
+      }
+
+   /*Only way to change placeholder text color*/
+    #main ::-webkit-input-placeholder {
+      color: #848484;
+    }
+    #main ::-moz-placeholder {
+      color: #403f3f;
+    }
+
 
 /*==============================
     Section | PAST TIMERS
@@ -66,6 +85,17 @@ p {
   font-size: 0.8em;
   display: inline-block;
 }
+
+/*======== Past timer list ========*/
+
+/*======== Message when there are no timers ========*/
+  #why {
+    font-size: 3em;
+    font-family: 'Open Sans Condensed', sans-serif;
+    color: #d3d3d3;
+    width: 90%;
+    margin:auto;
+  }
 
 /*==============================
     Section | LOGIN
@@ -77,30 +107,35 @@ p {
   bottom: 0;
 }
 
-#login form{
-    font-size:1em;
-}
-
+/*======== Input fields ========*/
   div.email, div.pw {
-    position: relative; /* fa Helps curtail overlap of fa*/
-    padding: 0.2em 0.2em 0.2em 0.5em;
+    position: relative; /* fa Helps curtail overlap of fa */
+    padding: 0.4em;
     margin: 0.8em auto;
     border-bottom: solid 1px #fff;
-    display: block;
+    display: block; /*default is inline*/
     width: 90%;
   }
 
     .email input, .pw input{
+      font-family: 'Open Sans', sans-serif;
       border: 0;
       margin-left: 0.3em;
       width: 90%;
       background:none;
+      font-size:0.9em;
     }
 
+      .email input:focus, .pw input:focus{
+        outline: 0;
+      }
+
+  /*fa*/
   .fa-envelope-o .fa-lock{
     color: red;
   }
 
+/*======== Submit button ========*/
   #login-button{
     width: 90%; /*keeps contents in line with other login fields*/
     text-align:right; /*aligns contents to the right*/
@@ -110,6 +145,7 @@ p {
     #login-button button{
       border-radius:0;
       color: #fff;
+      font-size:0.9em;
       border: solid 1px #fff;
       text-transform:uppercase;
       text-align: center;
@@ -117,3 +153,8 @@ p {
       padding:0.5em;
       margin: 0 0 0.7em;
     }
+
+/*==============================
+    Colours
+================================*/
+/*greens: #00ca74 #01a25e #78d123 #93da4f*/
