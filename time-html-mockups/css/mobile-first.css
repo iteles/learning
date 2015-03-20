@@ -21,6 +21,30 @@ p {
 }
 
 /*==============================
+    Feedback triangle
+================================*/
+/*Triangle from: http://callmenick.com/2014/05/03/css-triangles/*/
+#feedback-triangle{
+  position:absolute;
+  top:0;
+  margin: 0;
+  width: 2em;
+  height: 2em;
+  border-top: solid 2em #00ca74; /*or red: #c81e32*/
+  border-left: solid 2em #00ca74;
+  border-right: solid 2em transparent;
+  border-bottom: solid 2em transparent;
+}
+
+  #feedback-triangle i:before{
+    position:relative;
+    bottom: 1.2em;
+    right: 1.3em;
+    color:white;
+    font-size: 1.2em;
+  }
+
+/*==============================
   Section | MAIN (current timer)
 ================================*/
 #main {
@@ -29,6 +53,7 @@ p {
   background: #EEE8E8;
   text-align: center;
 }
+
 
 /*======== Timer time ========*/
   #main .timer-time {
@@ -74,7 +99,7 @@ p {
       color: #848484;
     }
     #main ::-moz-placeholder {
-      color: #403f3f;
+      color: #848484;
     }
 
 
@@ -124,6 +149,7 @@ p {
       width: 90%;
       background:none;
       font-size:0.9em;
+      color:white; /*text input by user*/
     }
 
       .email input:focus, .pw input:focus{
@@ -131,8 +157,8 @@ p {
       }
 
   /*fa*/
-  .fa-envelope-o .fa-lock{
-    color: red;
+  .fa-envelope-o:before, .fa-lock:before{
+    color: #848484;
   }
 
 /*======== Submit button ========*/
