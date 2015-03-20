@@ -58,3 +58,33 @@ p {
     font-size: 0.8em;
     text-align: center;
   }
+
+/*==============================
+    Section | PAST TIMERS
+================================*/
+#past-timers p{
+  font-size: 0.8em;
+  display: inline-block;
+}
+
+/*==============================
+    Section | LOGIN
+================================*/
+#login{
+  background: #323232;
+}
+
+div.email, div.pw {
+      position: relative; /* Helps curtail overlap */
+      padding: 3px 5px 5px 25px; /* Adjust as needed */
+      border: solid 1px #888;
+}
+
+.fa-envelope-o {
+  color: red;
+}
+
+.email input, .pw input{
+  padding-left:1em;
+  border: 0;
+}
