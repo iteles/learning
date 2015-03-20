@@ -72,19 +72,48 @@ p {
 ================================*/
 #login{
   background: #323232;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
 }
 
-div.email, div.pw {
-      position: relative; /* Helps curtail overlap */
-      padding: 3px 5px 5px 25px; /* Adjust as needed */
-      border: solid 1px #888;
+#login form{
+    font-size:1em;
 }
 
-.fa-envelope-o {
-  color: red;
-}
+  div.email, div.pw {
+    position: relative; /* fa Helps curtail overlap of fa*/
+    padding: 0.2em 0.2em 0.2em 0.5em;
+    margin: 0.8em auto;
+    border-bottom: solid 1px #fff;
+    display: block;
+    width: 90%;
+  }
 
-.email input, .pw input{
-  padding-left:1em;
-  border: 0;
-}
+    .email input, .pw input{
+      border: 0;
+      margin-left: 0.3em;
+      width: 90%;
+      background:none;
+    }
+
+  .fa-envelope-o .fa-lock{
+    color: red;
+  }
+
+  #login-button{
+    width: 90%; /*keeps contents in line with other login fields*/
+    text-align:right; /*aligns contents to the right*/
+    margin:auto;
+  }
+
+    #login-button button{
+      border-radius:0;
+      color: #fff;
+      border: solid 1px #fff;
+      text-transform:uppercase;
+      text-align: center;
+      background: none;
+      padding:0.5em;
+      margin: 0 0 0.7em;
+    }
