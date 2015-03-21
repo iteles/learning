@@ -106,12 +106,6 @@ p {
 /*==============================
     Section | PAST TIMERS
 ================================*/
-#past-timers p{
-  font-size: 0.8em;
-  display: inline-block;
-}
-
-/*======== Past timer list ========*/
 
 /*======== Message when there are no timers ========*/
   #why {
@@ -120,6 +114,18 @@ p {
     color: #d3d3d3;
     width: 90%;
     margin:auto;
+  }
+
+/*======== Past timer list ========*/
+#past-timers p{
+  font-size: 0.8em;
+  display: inline-block;
+}
+
+  span.timer-time{
+      color:red;
+      position: absolute;
+      right:0.5em;
   }
 
 /*==============================
