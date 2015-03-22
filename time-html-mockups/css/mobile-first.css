@@ -117,17 +117,24 @@ p {
   }
 
 /*======== Past timer list ========*/
-#past-timers p{
-  font-size: 0.8em;
-  display: inline-block;
+#past-timers{
+  font-size:0.9em;
+  padding:0.7em 0.2em;
+  border-bottom: 1px solid #d3d3d3;
 }
 
   span.timer-time{
-      color:red;
-      position: absolute;
-      right:0.5em;
+    position: absolute;
+    right:0.5em;
+    width: 15%;
+    text-align:right;
   }
 
+  span.timer-desc{
+    width: 65%;
+    text-align:right;
+    overflow: hidden;
+  }
 /*==============================
     Section | LOGIN
 ================================*/
