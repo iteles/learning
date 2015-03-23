@@ -118,23 +118,29 @@ p {
 
 /*======== Past timer list ========*/
 #past-timers{
+  width: 100%;
   font-size:0.9em;
   padding:0.7em 0.2em;
   border-bottom: 1px solid #d3d3d3;
+  display: table;
 }
 
-  span.timer-time{
-    position: absolute;
-    right:0.5em;
-    width: 15%;
-    text-align:right;
+  .timer-one-line{
+    display: table-row;
   }
 
-  span.timer-desc{
-    width: 65%;
-    text-align:right;
-    overflow: hidden;
+  .timer-one-line i,
+  .timer-one-line span{
+    display: table-cell;
   }
+
+    span.timer-time{
+      text-align:right;
+    }
+
+    span.timer-desc{
+      text-align:left;
+    }
 /*==============================
     Section | LOGIN
 ================================*/
