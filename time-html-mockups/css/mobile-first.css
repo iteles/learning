@@ -132,15 +132,17 @@ p {
   .timer-one-line i,
   .timer-one-line span{
     display: table-cell;
+    padding: 0 0.3em;
   }
-
-    span.timer-time{
-      text-align:right;
-    }
 
     span.timer-desc{
       text-align:left;
     }
+    
+    span.timer-time{
+      text-align:right;
+    }
+
 /*==============================
     Section | LOGIN
 ================================*/
@@ -198,6 +200,22 @@ p {
       padding:0.5em;
       margin: 0 0 0.7em;
     }
+
+/*==============================
+    Section | NAV
+================================*/
+#nav{
+  background: #323232;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+}
+
+  #profile-button{
+    color: white;
+    font-size: 1.5em;
+    padding: 0.1em 0.2em;
+  }
 
 /*==============================
     Colours
