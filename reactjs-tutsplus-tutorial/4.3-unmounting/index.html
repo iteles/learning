@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8>
+  <title>First Component</title>
+</head>
+<body>
+
+  <!-- container node -->
+ <div id="app"></div>
+
+ <script src="http://fb.me/react-with-addons-0.12.2.js"></script>
+ <script src="http://fb.me/JSXTransformer-0.12.2.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+ <script type="text/jsx">
+ /** @jsx React.DOM */
+
+ //Unmounting allows cleanup when we remove the component from the DOM
+
+   var Dashboard = React.createClass({
+
+     loadData: function(url) {
+       return $.get('https://vivid-fire-489.firebaseio.com/' + url + '/.json');
+     },
+
+     componentWillMount: function() {
+       //debugger;
+     },
+
+     componentDidMount: function() {
+       //debugger;
+       this.loadData(this.props.url).then(function(data) {
+         this.setState({
+           metric: data
+         });
+       }.bind(this));
+     },
+
+     //allows us to check out props
+     //won't fire off in first time a render occurs, only when there are new properties
+     //componentWillReceiveProps get new props and compare them against our old ones
+     componentWillReceiveProps: function(nextProps) {
+       var lastUrl = this.props.url;
+       this.loadData(nextProps.url).then(function(data) {
+         this.setState({
+           lastRoute: lastUrl,
+           metric:data
+         });
+       }.bind(this));
+     },
+
+    //  determines whether components should update
+     shouldComponentUpdate: function(nextProps, nextState) {
+       //if you had a metric1 prop in firebase that was 75 for example and then
+       //in the browser console `dashComponent.setProps({url: 'metric1'});`, it
+       //wouldn't update to 75 as it's less than 100
+       return nextState.metric > 100;
+     },
+
+     componentWillUnmount: function(){
+       debugger;
+       $('#tip').tooltip('destroy');
+     },
+
+     getInitialState: function () {
+       return {
+         metric: 0,
+         lastRoute: 'hello'
+       };
+     },
+
+     render: function () {
+       return (
+         <div className="jumbotron">
+          {this.state.lastRoute}
+        <a id="tip" href="#" data-toggle="tooltip" title="Hover!">Hover over me</a>
+        <h2>{this.state.metric} </h2>
+        </div>
+       );
+     }
+
+   });
+
+   var dashComponent = React.renderComponent(
+     <Dashboard url="metric" />,
+     document.getElementById('app')
+   );
+
+ </script>
+</body>
+</html>
