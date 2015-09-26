@@ -1,0 +1,1 @@
+Following and testing https://github.com/nelsonic/learn-hapi with release 10.1.0 of hapi.js.

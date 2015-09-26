@@ -1,0 +1,5 @@
+#Mac DS_Store file
+.DS_Store
+
+#node modules folder
+node_modules/

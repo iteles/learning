@@ -1,0 +1,19 @@
+{
+  "name": "hapiapp",
+  "version": "0.0.1",
+  "description": "exercise files from https://github.com/nelsonic/learn-hapi/",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "lab -c"
+  },
+  "author": "",
+  "license": "GPL-2.0",
+  "dependencies": {
+    "boom": "^2.9.0",
+    "hapi": "^10.1.0",
+    "joi": "^6.7.1"
+  }
+}
