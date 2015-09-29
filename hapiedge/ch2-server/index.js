@@ -1,110 +1,55 @@
-//Sets up a server *without* using the `glue`, `rejoice` and `confidence`modules
+//Chapter 2, PART 2 
+//Sets up a server using the `glue`, `rejoice` and `confidence`modules
 
-var Async = require('async');
-var Bell = require('bell');
-var Blipp = require('blipp');
+var Glue = require('glue'); 
 var Hapi = require('hapi');
-var HapiAuthCookie = require('hapi-auth-cookie');
-var Hoek = require('hoek');
-
-var Api = require('./api');
-var Authentication = require('./authentication');
-var Controllers = require('./controllers');
-var Models = require('./models');
-var Routes = require('./routes')
 
 var internals = {
-  //splits out main HTTP server & API server (handles the data)
-  servers: {
-    http: {
-      port: 8080,
-      host: '0.0.0.0',
-      labels: ['http'] //ensures plugins are loaded to appropriate server connection
-    },
-    api: {
-      port: 8000,
-      host: '0.0.0.0',
-      labels: ['api']
-    }
-  },
-  options: {
-    files: {
-      relativeTo: __dirname
-    }
-  }
-};
+  manifest: {
+    
+    //server connections including labels for each one
+    connection: [{
+        port: 8080,
+        labels: ['http']
+      },
+      {
+        port: 8000,
+        labels: ['api']
+      }],
+    
+    //defines all the plugins and the correct connection for each one
+    plugins:{
+      bell: [{ 'select': ['http']}],
+      blipp: [{}],
+      
+      './authentication' : [{ 'select' : ['http'] }],
+      './controllers' : [{ 'select' : ['http', 'api'] }],
+      
+      '/models' : [{ 'select' : ['http' , 'api'] }],
+      './routes' : [{ 'select' : ['http'] }],
+      './api' : [{ 'select' :['api'] }],
+      
+      good: {
+        opsInterval: 5000,
+        reporters: [{
+          'reporter' : 'good-console',
+          'events' : {'ops':'*', 'log':'*'}
+        }]
+      }
+    } // closes plugins
+  } // closes manifest
+}; //end of internals
 
-exports.init = function(callback){
-  var server = new Hapi.server();
-
-  server.connection(internals.server.http);
-  server.connection(internals.server.api);
+//brings everything together, compose(manifest, [options], callback)
+Glue.compose(internals.manifest, { relativeTo: __dirname },
+  function(err, server){
   
-  //path prefix so we can use relative paths
-  server.path(internals.options.files.relativeTo);
-  
-  //handles errors on requests
-  server.on('request-error', function(request, response){
-    console.log('request-error: ');
-    console.dir(response);
+  if (err){
+    console.log('server.register err: ', err);
   }
   
-  //server routes covered in chapter 3
-  server.route({
-    method: 'GET',
-    path:'/',
-    handler: function(req, reply){
-      return reply('hello hapi');
-    }
+  server.start(function(){
+    console.log('server started');
   });
   
-  //handles registering plugins for the http connection
-  var registerHttpPlugins = function(next){
-    server.register([
-      Bell, 
-      Blipp,
-      HapiAuthCookie,
-      Authentication,
-      Controllers, 
-      Models,
-      Routes
-    ],
-    { select:'http' },
-    function(err){
-      return next(err);
-    });
-  };
-  
-  //handles registering plugins for the api connection
-  var registerApiPlugins = function(next){
-    server.register([ 
-      Blipp,
-      Controllers, 
-      Models,
-      Api
-    ],
-    { select:'api' },
-    function(err){
-      return next(err);
-    });
-  };
-  
-  //registers plugins asynchronously (because it doesn't matter which order
-  //they are registered in) and starts server
-  Async.auto({
-    http: registerHttpPlugins;
-    api: registerApiPlugins;
-    },
-    function(err, data){
-      if(err){
-        console.log('server.register err: ');
-        return callback(err);
-      }
-      
-      server.start(function (){
-        return callback(null, server);
-      });    
-        
-    });
-
-}; //closes exports.init
+});
