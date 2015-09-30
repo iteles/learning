@@ -8,11 +8,11 @@ var Hapi = require('hapi');
 var HapiAuthCookie = require('hapi-auth-cookie');
 var Hoek = require('hoek');
 
-var Api = require('./api');
-var Authentication = require('./authentication');
-var Controllers = require('./controllers');
-var Models = require('./models');
-var Routes = require('./routes')
+// var Api = require('./api');
+// var Authentication = require('./authentication');
+// var Controllers = require('./controllers');
+// var Models = require('./models');
+// var Routes = require('./routes')
 
 var internals = {
   //splits out main HTTP server & API server (handles the data)
@@ -48,7 +48,7 @@ exports.init = function(callback){
   server.on('request-error', function(request, response){
     console.log('request-error: ');
     console.dir(response);
-  }
+  });
   
   //server routes covered in chapter 3
   server.route({
@@ -93,8 +93,8 @@ exports.init = function(callback){
   //registers plugins asynchronously (because it doesn't matter which order
   //they are registered in) and starts server
   Async.auto({
-    http: registerHttpPlugins;
-    api: registerApiPlugins;
+    http: registerHttpPlugins,
+    api: registerApiPlugins
     },
     function(err, data){
       if(err){
@@ -104,6 +104,7 @@ exports.init = function(callback){
       
       server.start(function (){
         return callback(null, server);
+        console.log ('server started');
       });    
         
     });
