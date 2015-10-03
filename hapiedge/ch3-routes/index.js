@@ -20,7 +20,7 @@ var internals = {
       // './controllers' : [{ 'select' : ['http', 'api'] }],
       // 
       // '/models' : [{ 'select' : ['http' , 'api'] }],
-      // './lib/routes' : [{ 'select' : ['http'] }],
+      './lib/routes' : [{ 'select' : ['http'] }], //added this line to make it run
       // './api' : [{ 'select' :['api'] }],
       
       good: {

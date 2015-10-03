@@ -8,11 +8,11 @@ var Hapi = require('hapi');
 var HapiAuthCookie = require('hapi-auth-cookie');
 var Hoek = require('hoek');
 
-// var Api = require('./api');
-// var Authentication = require('./authentication');
-// var Controllers = require('./controllers');
-// var Models = require('./models');
-// var Routes = require('./routes')
+var Api = require('./api');
+var Authentication = require('./authentication');
+var Controllers = require('./controllers');
+var Models = require('./models');
+var Routes = require('./routes')
 
 var internals = {
   //splits out main HTTP server & API server (handles the data)
