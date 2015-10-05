@@ -2,6 +2,11 @@
 
 Most notes for this book are actually in the code files in the form of comments, but I've added some additional notes here.
 
+##Contents Guide
++ [Chapter 2 - Server](#chapter2)
++ [Chapter 3 - Routes](#chapter3)
+
+<a name="chapter2"/>
 ## Chapter 2 - Server
 **Takeaways:**
 >Using `glue` can make setup look cleaner and simpler and the book recommends using `rejoice` or `confidence` to configure our server with JSON files when there are multiple environments (`dev`, `prod`, etc).   
@@ -30,7 +35,69 @@ Most notes for this book are actually in the code files in the form of comments,
 + You can set up a cache with segments and give each segment a name as a way of isolating cached items
   + When you instantiate (?) the cache from within a plugin, the segment defaults to `!pluginNameHere`
 <br/><br/>
-**There is a great list of the _http request lifecycle_ in chapter 2 (location 446 on the Kindle eBook)**
+
+**There is a great list of the _http request lifecycle_ in chapter 2 (location 446 on the Kindle eBook)**.
 
 **Extension points**
 + Extension points (`server.ext()`) are used to grab certain points (streams like `onPreResponse` and `onRequest`) and insert a function
+  + _Note: Professional Node developers I know have said they don't ever use extension points_
+  
+<a name="chapter3"/>
+## Chapter 3 - Routes
++ For more complex configuration, route `config` (handlers, validation, caching - though this is a different caching to `server.cache` - etc) is usually kept in a separate file
+```javascript
+//server.js
+var Welcome = require('./controllers/welcome.js')
+//...
+server.route({
+    method:'GET',
+    path:'/',
+    config: Welcome.index
+});
+//...
+```
+```javascript
+//welcome.js
+module.exports.index = {
+    description: 'description here',
+    handler: function(request, reply){
+    //...
+  }
+};
+```
+
++ hapi protects you against conflicts between your routes by complaining when there is a conflict
+
++ **Route prerequisites** allow you to perform an action before the route handler is called, like fetching data from a database
+  + part of `config`
+  + `pre:` inside `server.route`
+  + Takes an array of _objects_
+    + Each object has a `method` and an `assign` property (although it [can have more](http://hapijs.com/api#route-prerequisites))
+    + Runs in series - except arrays within that array where the actions are run in parallel
+
+```javascript
+server.route({
+  //...
+  config:{
+    pre: [
+      series, //e.g. {method: yourFunctionHere, assign: 'connection'}
+      series,
+      [
+        parallel, 
+        parallel
+      ],
+      series
+    ]
+  }
+});
+```
++ Paths accept parameters in curly brackets such as `path: '/plugins/{name}'`, which can then be accessed in the handler using `request.params.name`
+  + Adding a `?` to the parameter name indicates it is optional: `'/plugins/{name?}'`
+  + You can also add a wildcard `*`, `'/plugins/{name*}'`, which will store wildcard characters as an array in the named parameter (name)
+    + You can also add the number of segments you want to be wilcards: `'/plugins/{name*2}'` would match '_/plugins/hapijs/hapi-auth-jwt2_' for example
+  
++ Only 2 options can be set as part of the server itself:
+  + `stripTrailingSlash` which **defaults to `false`** and strips slashes from the end of a path (e.g. _'plugin/hapijs/bell/'_ becomes _'plugin/hapijs/bell'_)
+  + `isCaseSensitive` which **defaults to `true`** and means paths are case sensitive   
+
+
