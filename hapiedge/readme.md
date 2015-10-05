@@ -2,6 +2,10 @@
 
 Most notes for this book are actually in the code files in the form of comments, but I've added some additional notes here.
 
+## How the code is organized:
+Each chapter directory contains the code in the state it should be in **at the _beginning_ of that chapter**. The idea here is that for every chapter there is a _"clean slate"_ that I or anyone using these notes can come back to if they want to dip in to just one chapter and do the work there.    
+If you want to see all of the code created during chapter 4 for example, you would actually go into the chapter 5 directory.
+
 ## Contents Guide
 + [Chapter 2 - Server](#chapter2)
 + [Chapter 3 - Routes](#chapter3)

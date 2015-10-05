@@ -1,8 +1,12 @@
+//Chapter 2, PART 2 
+//Sets up a server using the `glue`, `rejoice` and `confidence`modules
+
 var Glue = require('glue'); 
 var Hapi = require('hapi');
 
 var internals = {
-  manifest: {
+  manifest: {    
+    //server connections including labels for each one
     connections: [{
         port: 8080,
         labels: ['http']
@@ -12,27 +16,30 @@ var internals = {
         labels: ['api']
       }],
     
+    //defines all the plugins and the correct connection for each one
     plugins:{
       bell: [{ 'select': ['http']}],
       blipp: [{}],
       
-      // './authentication' : [{ 'select' : ['http'] }],
-      // './controllers' : [{ 'select' : ['http', 'api'] }],
-      // 
-      // '/models' : [{ 'select' : ['http' , 'api'] }],
-      './lib/routes' : [{ 'select' : ['http'] }], //added this line to make it run
-      // './api' : [{ 'select' :['api'] }],
+      './authentication' : [{ 'select' : ['http'] }],
+      './controllers' : [{ 'select' : ['http', 'api'] }],
+      
+      '/models' : [{ 'select' : ['http' , 'api'] }],
+      './routes' : [{ 'select' : ['http'] }],
+      './api' : [{ 'select' :['api'] }],
       
       good: {
         opsInterval: 5000,
-        reporters: [
-          { 'reporter' : 'good-console', 'events' : {'ops':'*', 'log':'*'} }
-        ]
+        reporters: [{
+          'reporter' : 'good-console',
+          'events' : {'ops':'*', 'log':'*'}
+        }]
       }
-    } 
-  } 
-}; 
+    } // closes plugins
+  } // closes manifest
+}; //end of internals
 
+//brings everything together, compose(manifest, [options], callback)
 Glue.compose(internals.manifest, { relativeTo: __dirname },
   function(err, server){
   
