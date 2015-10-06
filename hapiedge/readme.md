@@ -1,10 +1,11 @@
-#Developing a hapi edge
+# Developing a hapi edge
 
 Most notes for this book are actually in the code files in the form of comments, but I've added some additional notes here.
 
-##Contents Guide
+## Contents Guide
 + [Chapter 2 - Server](#chapter2)
 + [Chapter 3 - Routes](#chapter3)
++ [Chapter 4 - The Handler](#chapter4)
 
 <a name="chapter2"/>
 ## Chapter 2 - Server
@@ -98,6 +99,38 @@ server.route({
   
 + Only 2 options can be set as part of the server itself:
   + `stripTrailingSlash` which **defaults to `false`** and strips slashes from the end of a path (e.g. _'plugin/hapijs/bell/'_ becomes _'plugin/hapijs/bell'_)
-  + `isCaseSensitive` which **defaults to `true`** and means paths are case sensitive   
+  + `isCaseSensitive` which **defaults to `true`** and means paths are case sensitive 
+  
+<a name="chapter4"/>
+## Chapter 4 - The Handler
+A handler determines how the incoming request to the server should be dealt with and what to respond to the client. It's a callback generally with two arguments: `request` and `reply`.
+
+### Request object
+There's a lot of important information attached to the **request object** such as:
++ **parameters** from `'/plugins/{name*}'` accessed via `request.params.name`
++ **query** is the `?search=accessibility&search=books` part of the URL, accessed via `request.query` which contains all the key value pairs in the query - e.g. `{search: 'accessibility', 'books'}`
++ **payload** contains what was transmitted as part of the request _but not in the query string_ (e.g. a blob of JSON or a user's email address when they sign up to a newsletter)
+  + Should **never have a payload with `GET`**, if so, rethink your design
+  ```javascript
+  handler: function(request, reply){
+    console.log("You've signed up with the email ", request.payload.email);
+    return reply('success');
+  };
+  ```
++ **headers** are accessed via `request.headers`, so `request.headers.Content-Type` could be `application/json` for example 
+
+### Reply object
+Serves as a callback and is **returns control to the framework**.
+
+As it's a callback, it passes back both an error and a result object though in practice only the result is used.
+
+### Organizing handlers
+It's recommended that they go into `/lib/routes.js` and it's typical for the configuration of the route to live in a completely different file like this (for clarity and structure).
+
+### Common handlers
+Handlers **used to be built-in** (before hapi 9.0), **they are now plugins**.
+
+In order to _use_ these plugins, add them to `package.json` and make sure they're [registered with the server](http://hapijs.com/api#serverregisterplugins-options-callback).
+
 
 
