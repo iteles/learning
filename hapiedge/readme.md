@@ -109,6 +109,8 @@ server.route({
 ## Chapter 4 - The Handler
 A handler determines how the incoming request to the server should be dealt with and what to respond to the client. It's a callback generally with two arguments: `request` and `reply`.
 
+_Note: handlers **can** be defined directly on the server object (`server.handler`) but this is **not advised in practice**).
+
 ### Request object
 There's a lot of important information attached to the **request object** such as:
 + **parameters** from `'/plugins/{name*}'` accessed via `request.params.name`
@@ -136,7 +138,7 @@ Handlers **used to be built-in** (before hapi 9.0), **they are now plugins**.
 
 In order to _use_ these plugins, add them to `package.json` and make sure they're [registered with the server](http://hapijs.com/api#serverregisterplugins-options-callback).
 
-#### file
+#### file handler
 **Plugin:** `inert`    
 **Function:** Serves individual files.    
 **Example:** Serving a favicon
@@ -258,7 +260,34 @@ server.route({
   }
 });
 ```
+### Binding methods to the server
 
+When you have function that need to be accessed multiple times, you can **[bind them](http://hapijs.com/api#serverbindcontext) to the global context** which makes them available on the `this` keyword within the handler.
+```javascript
+server.bind({
+  myService: new Service()
+});
+
+//now accessible in the handlers as `this.myService`
+```
+### Decorating the reply
+
+You can choose to decorate the server _or_ the reply and it's in the first argument of the `decorate()` function that you choose which one you're decorating. 
+```javascript
+//here we're decorating the reply with a 'success' function
+server.decorate('reply', 'success', function(){
+  return this.response({ success: true });
+});
+
+//NOTE: Accessed in the handler simply through `reply.success();`
+```
+
+This particular example is also good for ensuring consistency across replies for success.
+
+### Tails
+When a request finishes processing, it emits a `tail` event, which can be picked up with `server.on('tail', function(request){ ... })`.
+
+When tails are [explicitly added using `request.tail`](http://hapijs.com/api#requesttailname) (e.g. `var publishTail = request.tail('publish the book in the background for download');`)they must complete _before_ the request lifecycle is complete.
 
 
 

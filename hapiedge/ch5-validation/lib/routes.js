@@ -1,15 +1,27 @@
-//Route doesn't work yet as this chapter oddly doesn't show how to connection
-//this code back to index.js
-var Joi = require('joi'); //added this line to make it run
+//Again, this code cannot be run as chapter 3 doesn't take us
+//through connecting the routes to the rest of the code
+var Joi = require('joi'); 
 var internals = {};
 
-//I think I made this variable up, look back at ch3 to find out what it should be and ammend comment at the top, maybe just server.route?
-var routes = [
+routes = [
   {
     method: 'GET',
     path: '/plugins/{name}',
     config: internals.config
   }
+  
+  //uploading a file from upload.html template
+  { 
+    method: 'GET',
+    path: '/plugins/upload',
+    config: Controllers.Plugin.getUpload
+  },
+  { 
+    method: 'POST', 
+    path: '/plugins/upload',
+    config: Controllers.Plugin.postUpload
+  },
+  
   // Assets & Static Routes
   { method: 'GET',  path: '/favicon.ico', handler: Controllers.Static.favicon },
   { method: 'GET',  path: '/css/{path*}', handler: Controllers.Static.css },
