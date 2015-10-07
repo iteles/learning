@@ -11,3 +11,4 @@ This includes exercises from:
 * [Testing Hapi Services with Lab](https://medium.com/the-spumko-suite/96ac463c490a) by [@_expr](https://twitter.com/_expr), to learn the basics of Lab
 * [Testing with Lab](https://github.com/nelsonic/learn-hapi#testing-with-lab) by [@nelsonic](https://twitter.com/nelsonic)
 * [Hapijs.com Views tutorial](http://hapijs.com/tutorials/views) in July 2014
+* [Developing a hapi Edge: A Rich Node.JS Framework for Apps and Services](http://amzn.to/1jNVanE), published August 2015 by [Van Nguyen](https://github.com/thegoleffect/), [Wyatt Preul](https://github.com/wpreul/) and co-authors (in the [hapiedge](./hapiedge) directory)

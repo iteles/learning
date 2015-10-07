@@ -1,10 +1,15 @@
-#Developing a hapi edge
+# Developing a hapi edge
 
 Most notes for this book are actually in the code files in the form of comments, but I've added some additional notes here.
 
-##Contents Guide
+## How the code is organized:
+Each chapter directory contains the code in the state it should be in **at the _beginning_ of that chapter**. The idea here is that for every chapter there is a _"clean slate"_ that I or anyone using these notes can come back to if they want to dip in to just one chapter and do the work there.    
+If you want to see all of the code created during chapter 4 for example, you would actually go into the chapter 5 directory.
+
+## Contents Guide
 + [Chapter 2 - Server](#chapter2)
 + [Chapter 3 - Routes](#chapter3)
++ [Chapter 4 - The Handler](#chapter4)
 
 <a name="chapter2"/>
 ## Chapter 2 - Server
@@ -98,6 +103,200 @@ server.route({
   
 + Only 2 options can be set as part of the server itself:
   + `stripTrailingSlash` which **defaults to `false`** and strips slashes from the end of a path (e.g. _'plugin/hapijs/bell/'_ becomes _'plugin/hapijs/bell'_)
-  + `isCaseSensitive` which **defaults to `true`** and means paths are case sensitive   
+  + `isCaseSensitive` which **defaults to `true`** and means paths are case sensitive 
+  
+<a name="chapter4"/>
+## Chapter 4 - The Handler
+A handler determines how the incoming request to the server should be dealt with and what to respond to the client. It's a callback generally with two arguments: `request` and `reply`.
+
+_Note: handlers **can** be defined directly on the server object (`server.handler`) but this is **not advised in practice**).
+
+### Request object
+There's a lot of important information attached to the **request object** such as:
++ **parameters** from `'/plugins/{name*}'` accessed via `request.params.name`
++ **query** is the `?search=accessibility&search=books` part of the URL, accessed via `request.query` which contains all the key value pairs in the query - e.g. `{search: 'accessibility', 'books'}`
++ **payload** contains what was transmitted as part of the request _but not in the query string_ (e.g. a blob of JSON or a user's email address when they sign up to a newsletter)
+  + Should **never have a payload with `GET`**, if so, rethink your design
+  ```javascript
+  handler: function(request, reply){
+    console.log("You've signed up with the email ", request.payload.email);
+    return reply('success');
+  };
+  ```
++ **headers** are accessed via `request.headers`, so `request.headers.Content-Type` could be `application/json` for example 
+
+### Reply object
+Serves as a callback and is **returns control to the framework**.
+
+As it's a callback, it passes back both an error and a result object though in practice only the result is used.
+
+### Organizing handlers
+It's recommended that they go into `/lib/routes.js` and it's typical for the configuration of the route to live in a completely different file like this (for clarity and structure).
+
+### Common handlers
+Handlers **used to be built-in** (before hapi 9.0), **they are now plugins**.
+
+In order to _use_ these plugins, add them to `package.json` and make sure they're [registered with the server](http://hapijs.com/api#serverregisterplugins-options-callback).
+
+#### file handler
+**Plugin:** `inert`    
+**Function:** Serves individual files.    
+**Example:** Serving a favicon
+
+Add a route to your _lib/routes.js_
+```javascript
+{
+  method:'GET',
+  path: '/favicon.ico',
+  handler: Controllers.Static.favicon
+}
+```
+
+There will be a corresponding exported handler in _lib/controllers/handlers/static.js_ :
+```javascript
+exports.favicon = {
+    file: __dirname + '/../../public/favicon.ico'
+};
+```
+
++ Using a **string** as above in the handler is the most straight-forward approach
+  + A **callback** takes the `request` object as an argument and returns the path
+  ```javascript
+  exports.favicon = {
+      file: function(request){
+        __dirname + '/../../public/favicon.ico'
+      }
+  };
+  ```
+  + An **object** allows you a few more options:
+  ```javascript
+  //inside the exports.favicon
+  file: {
+    path: '/../../public/favicon.ico',
+    fileName: 'nameGoesHere', //overrides filename in Content-Disposition header
+    mode: false, //defualts to false, Content-Disposition header is not included
+    lookUpCompressed: false //defaults to false, means it doesn't look for a file of the same name with .gz ending
+  }
+  ```
+
+#### directory handler
+**Plugin:** `inert`    
+**Function:** Serves multiple files.    
+**Example:** Serving CSS, JS, images, etc
+```javascript
+exports.css = {
+    directory: {
+        path: __dirname + '/../../public/css',
+        index: false
+    }
+};
+```
+
+Rather than using `file:`, it uses `directory:` and has a few more options that can be included in the object:
+  + `path` can be set up in the same numerous ways as in the file handler
+  + `index` contains `true`, `false` or string with name of index file to look for - the default is `index.html`
+  + A few more [directory handler options can be found in the hapijs documentation](http://hapijs.com/tutorials/serving-files#directory-handler-options)
+
+#### views handler
+**Plugin:** `vision`    
+**Function:** Displays information using templates 
+
+_Note:_ **In practice, what is _used most often_ is actually configuring the server with a view option and then using `reply.view()` in the handler,** but hapi supports both well.
+**These notes will therefore focus on the regular handler using `server.views`**.
+
+In _both_ cases you **start by adding a views manager to the server configuration** - in the hapi-plugins.com project, this is done by exporting it from _lib/routes.js_.
+```javascript
+plugin.views({
+  engines: {
+    html: {
+      //sets handlebars as the rendering engine
+      model: require('handlebars') 
+    }
+  },
+  path: __dirname + '/views'
+});
+```
+To reply with your index page including a quote you might add something like this to _lib/controllers/handlers/home.js_:
+```javascript
+var internals = {};
+
+internals.quotes = [
+  //"list of quotes", "goes here"
+]
+
+module.exports.get = {
+  handler: function(request, reply){
+    reply.view('index', {
+      //finalmsg is what is in our template (<div> {{finalmsg}} </div>)
+      finalmsg: internals.quotes[Math.floor(Math.random()*internals.quotes.length)]
+    });  
+  };
+};
+```
+
+#### proxy handler
+**Plugin:** `h202`    
+**Function:** Sets up a proxy, often used for proxying legacy services    
+**Example:** Proxying google
+
+This allows for smaller, more controlled changes in your code as you slowly add routes to replace the service you're proxying over time.
+
+Here are just [some of the things](http://hapijs.com/api#route-options) you can do with the proxy handler:
+```javascript
+server.route({
+  method: '*', //matches any method
+  path: '/(path*)' //routes everything
+  config: {
+    handler:{
+      proxy: {
+        host: 'google.com',
+        port: '80',
+        protocol: 'http',
+        redirects: '5', //6th redirect gets a 300 error instead
+        passThrough: true, //preserves headers on the request
+        xforward: true //appends 'x-forwarded-for' header to request
+      }
+    }
+  }
+});
+```
+### Binding methods to the server
+
+When you have function that need to be accessed multiple times, you can **[bind them](http://hapijs.com/api#serverbindcontext) to the global context** which makes them available on the `this` keyword within the handler.
+```javascript
+server.bind({
+  myService: new Service()
+});
+
+//now accessible in the handlers as `this.myService`
+```
+### Decorating the reply
+
+You can choose to decorate the server _or_ the reply and it's in the first argument of the `decorate()` function that you choose which one you're decorating. 
+```javascript
+//here we're decorating the reply with a 'success' function
+server.decorate('reply', 'success', function(){
+  return this.response({ success: true });
+});
+
+//NOTE: Accessed in the handler simply through `reply.success();`
+```
+
+This particular example is also good for ensuring consistency across replies for success.
+
+### Tails
+When a request finishes processing, it emits a `tail` event, which can be picked up with `server.on('tail', function(request){ ... })`.
+
+When tails are [explicitly added using `request.tail`](http://hapijs.com/api#requesttailname) (e.g. `var publishTail = request.tail('publish the book in the background for download');`)they must complete _before_ the request lifecycle is complete.
+
+
+
+
+
+
+
+
+
+
 
 
