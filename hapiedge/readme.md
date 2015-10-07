@@ -136,5 +136,138 @@ Handlers **used to be built-in** (before hapi 9.0), **they are now plugins**.
 
 In order to _use_ these plugins, add them to `package.json` and make sure they're [registered with the server](http://hapijs.com/api#serverregisterplugins-options-callback).
 
+#### file
+**Plugin:** `inert`    
+**Function:** Serves individual files.    
+**Example:** Serving a favicon
+
+Add a route to your _lib/routes.js_
+```javascript
+{
+  method:'GET',
+  path: '/favicon.ico',
+  handler: Controllers.Static.favicon
+}
+```
+
+There will be a corresponding exported handler in _lib/controllers/handlers/static.js_ :
+```javascript
+exports.favicon = {
+    file: __dirname + '/../../public/favicon.ico'
+};
+```
+
++ Using a **string** as above in the handler is the most straight-forward approach
+  + A **callback** takes the `request` object as an argument and returns the path
+  ```javascript
+  exports.favicon = {
+      file: function(request){
+        __dirname + '/../../public/favicon.ico'
+      }
+  };
+  ```
+  + An **object** allows you a few more options:
+  ```javascript
+  //inside the exports.favicon
+  file: {
+    path: '/../../public/favicon.ico',
+    fileName: 'nameGoesHere', //overrides filename in Content-Disposition header
+    mode: false, //defualts to false, Content-Disposition header is not included
+    lookUpCompressed: false //defaults to false, means it doesn't look for a file of the same name with .gz ending
+  }
+  ```
+
+#### directory handler
+**Plugin:** `inert`    
+**Function:** Serves multiple files.    
+**Example:** Serving CSS, JS, images, etc
+```javascript
+exports.css = {
+    directory: {
+        path: __dirname + '/../../public/css',
+        index: false
+    }
+};
+```
+
+Rather than using `file:`, it uses `directory:` and has a few more options that can be included in the object:
+  + `path` can be set up in the same numerous ways as in the file handler
+  + `index` contains `true`, `false` or string with name of index file to look for - the default is `index.html`
+  + A few more [directory handler options can be found in the hapijs documentation](http://hapijs.com/tutorials/serving-files#directory-handler-options)
+
+#### views handler
+**Plugin:** `vision`    
+**Function:** Displays information using templates 
+
+_Note:_ **In practice, what is _used most often_ is actually configuring the server with a view option and then using `reply.view()` in the handler,** but hapi supports both well.
+**These notes will therefore focus on the regular handler using `server.views`**.
+
+In _both_ cases you **start by adding a views manager to the server configuration** - in the hapi-plugins.com project, this is done by exporting it from _lib/routes.js_.
+```javascript
+plugin.views({
+  engines: {
+    html: {
+      //sets handlebars as the rendering engine
+      model: require('handlebars') 
+    }
+  },
+  path: __dirname + '/views'
+});
+```
+To reply with your index page including a quote you might add something like this to _lib/controllers/handlers/home.js_:
+```javascript
+var internals = {};
+
+internals.quotes = [
+  //"list of quotes", "goes here"
+]
+
+module.exports.get = {
+  handler: function(request, reply){
+    reply.view('index', {
+      //finalmsg is what is in our template (<div> {{finalmsg}} </div>)
+      finalmsg: internals.quotes[Math.floor(Math.random()*internals.quotes.length)]
+    });  
+  };
+};
+```
+
+#### proxy handler
+**Plugin:** `h202`    
+**Function:** Sets up a proxy, often used for proxying legacy services    
+**Example:** Proxying google
+
+This allows for smaller, more controlled changes in your code as you slowly add routes to replace the service you're proxying over time.
+
+Here are just [some of the things](http://hapijs.com/api#route-options) you can do with the proxy handler:
+```javascript
+server.route({
+  method: '*', //matches any method
+  path: '/(path*)' //routes everything
+  config: {
+    handler:{
+      proxy: {
+        host: 'google.com',
+        port: '80',
+        protocol: 'http',
+        redirects: '5', //6th redirect gets a 300 error instead
+        passThrough: true, //preserves headers on the request
+        xforward: true //appends 'x-forwarded-for' header to request
+      }
+    }
+  }
+});
+```
+
+
+
+
+
+
+
+
+
+
+
 
 
