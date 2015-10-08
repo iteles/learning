@@ -11,6 +11,7 @@ If you want to see all of the code created during chapter 4 for example, you wou
 + [Chapter 3 - Routes](#chapter3)
 + [Chapter 4 - The Handler](#chapter4)
 + [Chapter 5 - Validation](#chapter5)
++ [Chapter 6 - Plugins](#chapter6)
 
 <a name="chapter2"/>
 ## Chapter 2 - Server
@@ -339,6 +340,10 @@ server.route({
 
 + Joi is chainable, e.g. in this case only these 4 values are accepted: `Joi.string().insensitive().required().valid(['BR', 'SF', 'WR', 'WL']);`
 + You don't have to use Joi of course, you can just write your own validation function
+
+<a name="chapter6"/>
+## Chapter 6 - Plugins
+
 
 
 

@@ -1,0 +1,15 @@
+<!--Apparently chapter 9 is where we'll learn how to serve this file up!-->
+<!DOCTYPE html>
+<html>
+    <!--make a form POST to `/plugin/upload` where the `payload` for the file is named 'datafile'.-->
+    <form action="/plugin/upload"
+          enctype="multipart/form-data" method="post">
+        <p>
+        Choose a file for upload:
+        <input type="file" name="datafile" size="40">
+        </p>
+        <div>
+            <input type="submit" value="Send">
+        </div>
+    </form>
+</html>
