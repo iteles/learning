@@ -10,6 +10,7 @@ If you want to see all of the code created during chapter 4 for example, you wou
 + [Chapter 2 - Server](#chapter2)
 + [Chapter 3 - Routes](#chapter3)
 + [Chapter 4 - The Handler](#chapter4)
++ [Chapter 5 - Validation](#chapter5)
 
 <a name="chapter2"/>
 ## Chapter 2 - Server
@@ -289,7 +290,55 @@ When a request finishes processing, it emits a `tail` event, which can be picked
 
 When tails are [explicitly added using `request.tail`](http://hapijs.com/api#requesttailname) (e.g. `var publishTail = request.tail('publish the book in the background for download');`)they must complete _before_ the request lifecycle is complete.
 
+<a name="chapter5"/>
+## Chapter 5 - Validation
+hapi provides validation for `query`, `payload`, `headers` and `params` and
+typically this is validated with a [Joi](https://github.com/hapijs/joi) validation object.
 
++ Configured as part of the route options
++ `validate` is conveniently baked into hapi, but Joi can be used with other frameworks
+
+**Example:** You want to send change a password for one you specify
+```javascript
+//JSON object you send to the /user/{id}/password endpoint
+{ password: "somePasswordHere" }
+```
+So you set up the route like this:
+```javascript
+var Joi = require('joi');
+
+var routeOptions = {
+  //validate section is ONLY for INPUTS, so `response` has to be separate
+  validate:{
+    //id is made into a parameter
+    params: Joi.object().keys({
+      id: Joi.number();
+    });
+    //turns the password JSON object into the payload object 
+    payload: Joi.object().required().keys({
+      password: Joi.string().min(8).required();
+    });
+  },
+  //response (output) validation is extra important if you are relying on
+  // another API for example, you need to be confident it is valid
+  response:{
+    schema: Joi.object.keys({
+      success: Joi.boolean().required;
+    });
+  },
+  handler: handler;   
+};
+
+server.route({
+  method: 'POST',
+  path: '/user/{id}/password',
+  config: routeOptions;
+});
+```
++ Validation schemas can get quite big so if you're going to re-use them or keep your code clean, you can put the validation rules in the  `internals` variable (`var internals = { pluginSchema: Joi.object().keys({ ... })}`) and then refer to them in through `schema: internals.pluginSchema`
+
++ Joi is chainable, e.g. in this case only these 4 values are accepted: `Joi.string().insensitive().required().valid(['BR', 'SF', 'WR', 'WL']);`
++ You don't have to use Joi of course, you can just write your own validation function
 
 
 
