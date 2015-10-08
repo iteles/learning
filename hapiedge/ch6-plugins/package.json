@@ -23,6 +23,8 @@
     "good": "^6.4.0",
     "good-console": "^5.1.0",
     "hapi": "^10.1.0",
-    "hapi-auth-cookie": "^3.1.0"
+    "hapi-auth-cookie": "^3.1.0",
+    "joi": "^6.9.0",
+    "xss": "^0.2.7"    
   }
 }
