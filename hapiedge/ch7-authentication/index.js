@@ -16,12 +16,12 @@ var internals = {
       bell: [{ 'select': ['http']}],
       blipp: [{}],
       
-      // './authentication' : [{ 'select' : ['http'] }],
-      // './controllers' : [{ 'select' : ['http', 'api'] }],
-      // 
-      // '/models' : [{ 'select' : ['http' , 'api'] }],
+      './authentication' : [{ 'select' : ['http'] }],
+      './controllers' : [{ 'select' : ['http', 'api'] }],
+      
+      '/models' : [{ 'select' : ['http' , 'api'] }],
       './lib/routes' : [{ 'select' : ['http'] }], //added this line to make it run
-      // './api' : [{ 'select' :['api'] }],
+      './api' : [{ 'select' :['api'] }],
       
       good: {
         opsInterval: 5000,

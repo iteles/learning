@@ -343,6 +343,12 @@ server.route({
 
 <a name="chapter6"/>
 ## Chapter 6 - Plugins
++ Typical register function signature is `server.register(plugins, [options], callback)`
++ It may be useful to split different functions so that each has their own plugin (e.g. one for all the functionality that deals with comments on a blog and another for all those that deal with posts)
+  + This only works when services are **_not_ tightly coupled**
++ Another example of splitting code might be to have some basic testing setup in a separate repo for re-use across projects
+
+
 
 
 
