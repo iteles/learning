@@ -1,8 +1,7 @@
 # Image Performance at London Web
 > Talk by [Grant Kemp](http://www.twitter.com/ukandroid)
 
-<blockquote class="twitter-tweet" lang="en"><p lang="en" dir="ltr">Great talk so far from <a href="https://twitter.com/ukandroid">@ukandroid</a> on Image performance at London Web! <a href="https://t.co/hdJWFWRNbg">pic.twitter.com/hdJWFWRNbg</a></p>&mdash; Ines Teles (@iteles) <a href="https://twitter.com/iteles/status/690256222315003904">January 21, 2016</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<a href="https://twitter.com/iteles/status/690256222315003904/photo/1"><img width="672" alt="screen shot 2016-01-21 at 23 40 00" src="https://cloud.githubusercontent.com/assets/4185328/12498158/6199c7ca-c098-11e5-8513-afb56b2e435c.png"></a>
 
 
 Images:
