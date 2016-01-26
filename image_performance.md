@@ -1,9 +1,12 @@
 # Image Performance at London Web
 > Talk by [Grant Kemp](http://www.twitter.com/ukandroid)
 
+Slides can be found at: http://www.slideshare.net/grantkemp/image-performance-talk-by-grant-kemp-london-web
+
 <a href="https://twitter.com/iteles/status/690256222315003904/photo/1"><img width="672" alt="screen shot 2016-01-21 at 23 40 00" src="https://cloud.githubusercontent.com/assets/4185328/12498158/6199c7ca-c098-11e5-8513-afb56b2e435c.png"></a>
 
 
+### Problem 1: Images are getting larger
 Images:
 + Activate and sell
 + Build brand with visitors
