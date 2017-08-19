@@ -6,7 +6,8 @@ Below I've captured the challenges as that's where the bulk of my learning lies.
 
 ### 1. Anonymous Functions
 
-#### 1.2 Task: On the second line, invoke the anonymous function assigned to the variable and pass your own name as a string argument to it.
+#### 1.2
+Task: On the second line, invoke the anonymous function assigned to the variable and pass your own name as a string argument to it.
 
 <img width="740" alt="screen shot 2017-08-18 at 19 41 12" src="https://user-images.githubusercontent.com/4185328/29472829-3ffbbe78-844d-11e7-9dfd-622bba98b12f.png">
 
@@ -407,6 +408,186 @@ defmodule Validator do
       age < 21 -> "Under 21"
       true -> "Adult"
     end
+  end
+end
+```
+### 5.The Mix Tool
+#### 5.1 Video on Running Tasks & Organizing Projects
+> `.ex` files are meant to be compiled [e.g. lib files], while `.exs` files are used for scription [e.g. configuration and test files]
+
+#### 5.2 New Project
+Create a new project named expenses.
+
+`mix new expenses`
+
+#### 5.3 Calculating expenses
+
+**Task 1:** Define a new function called current_balance. This function should accept two arguments: initial and spending.
+```elixir
+defmodule Expenses do
+  def current_balance(initial, spending) do
+
+  end
+end
+```
+**Task 2:** From inside current_balance, return the subtraction of spending from initial.
+```elixir
+defmodule Expenses do
+  def current_balance(initial, spending) do
+    initial - spending
+  end
+end
+```
+
+#### Running with Mix
+Using _mix_ on a single line, run a command using the -e flag by passing a string containing the Expenses.current_balance(100, 30) function and piping the return value to the IO.puts function.
+```shell
+> mix run -e "Expenses.current_balance(100, 30) |> IO.puts"
+Compiling 1 file (.ex)
+Generated expenses app
+70
+Success!
+```
+
+#### 5.5 File Extensions
+<img width="709" alt="screen shot 2017-08-19 at 15 51 14" src="https://user-images.githubusercontent.com/4185328/29487752-57c23a74-84f6-11e7-94fd-92ce2f9677fc.png">
+
+#### 5.6 Video on learning how to work with 3rd party dependencies
+
+#### 5.7 Declaring dependencies
+<img width="1254" alt="screen shot 2017-08-19 at 16 21 37" src="https://user-images.githubusercontent.com/4185328/29488014-8e43e4ae-84fa-11e7-8d90-d100043d1fb6.png">
+
+```elixir
+# ITC: `defp` indicates a private function, not available outside the scope of this module
+defp deps do
+  [{:httpoison, "~> 0.10.0"}]
+end
+```
+**Task 2:** Now add the dependency for the :poison library with the semantic version requirement of "~> 3.0". This library parses JSON to Elixir code.
+```elixir
+defmodule Expenses.Mixfile do
+  use Mix.Project
+
+  def project do
+    [app: :expenses,
+     version: "0.1.0",
+     elixir: "~> 1.4",
+     build_embedded: Mix.env == :prod,
+     start_permanent: Mix.env == :prod,
+     deps: deps()]
+  end
+
+  def application do
+    # Specify extra applications you'll use from Erlang/Elixir
+    [extra_applications: [:logger]]
+  end
+
+  defp deps do
+    [{:httpoison, "~> 0.10.0"}, {:poison, "~> 3.0"}]
+  end
+end
+```
+
+#### 5.8 Resolving dependencies
+Use the mix tool to install the dependencies from a remote repository.
+`> mix deps.get`
+
+#### 5.9 Fetching API Data
+
+**Task 1:** Write a case statement where the test value is the return value of calling the HTTPoison.get function with the variable url as the argument.
+```elixir
+defmodule Expenses do
+  def total_spendings_FL(amount) do
+    url = "go.codeschool.com/state-taxes"
+    case HTTPoison.get(url) do
+    end
+
+  end
+
+  defp parse(_) do
+    # TODO
+```
+**Task 2:** The first pattern to the `case` statement should be the tuple ``{:ok, response}``. When this pattern is matched, it should invoke the function `parse(response)` and then pipe its return value to the function `calculate(amount)`. We’ll define these two functions in the next challenge.
+```elixir
+  case HTTPoison.get(url) do
+      {:ok, response} -> parse(response) |> calculate(amount)
+  end
+```
+**Task 3:** The second pattern should be the tuple {:error, \_}. When matched, it should return the string "Error fetching tax rates".
+```elixir
+defmodule Expenses do
+  def total_spendings_FL(amount) do
+    url = "go.codeschool.com/state-taxes"
+    case HTTPoison.get(url) do
+      {:ok, response} -> parse(response) |> calculate(amount)
+      {:error, _} -> "Error fetching tax rates"
+    end
+
+  end
+
+  defp parse(_) do
+    # TODO
+  end
+
+  defp calculate(_, _) do
+    # TODO
+  end
+end
+```
+#### 5.10 Mixing data
+<img width="758" alt="screen shot 2017-08-19 at 17 44 00" src="https://user-images.githubusercontent.com/4185328/29488636-d87d0fee-8506-11e7-80ec-f4788f41b542.png">
+
+**Task 1:** Complete the parse function by adding the json_response variable to the pattern matching on the map structure in the argument.
+```elixir
+defp parse(%{status_code: 200, body: json_response  }) do
+
+end
+```
+
+**Task 2:** Inside the parse function, invoke Poison.Parser.parse and pass it the json_response.
+```elixir
+defp parse(%{status_code: 200, body: json_response }) do
+   Poison.Parser.parse(json_response)
+ end
+```
+
+**Task 3:** On the first clause of the find_tax function, use the map in the argument to pattern match when "state" => "FL" and assign the value of the "rate" key to a variable named rate.
+```elixir
+defp find_tax([%{ "state" => "FL", "rate" => rate } | _ ]) do
+    rate
+end
+```
+
+**Task 4:** Inside the second clause of the find_tax function, call find_tax(tail) to complete the recursive scenario.
+```elixir
+defmodule Expenses do
+  def total_spendings_FL(amount) do
+    url = "localhost:3000/taxes"
+    case HTTPoison.get(url) do
+      {:ok, response} -> parse(response) |> calculate(amount)
+      {:error, _} -> "Error fetching tax rates"
+    end
+  end
+
+  defp parse(%{status_code: 200, body:  json_response }) do
+    Poison.Parser.parse(json_response)
+  end
+
+  defp calculate({:ok, rates}, amount) do
+    tax_rate = find_tax(rates)
+    amount + (amount * tax_rate)
+  end
+
+  defp find_tax([%{ "state" => "FL", "rate" => rate } | _ ]) do
+    rate
+  end
+
+  defp find_tax([_ | tail]) do
+    find_tax(tail)
+  end
+
+  defp find_tax([]) do
+    raise "FL rate not found"
   end
 end
 ```
