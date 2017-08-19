@@ -144,3 +144,149 @@ Printer.list_names(users)
 
 #### 2.4 The two cases for recursion
 <img width="707" alt="screen shot 2017-08-19 at 10 37 01" src="https://user-images.githubusercontent.com/4185328/29485473-65527450-84ca-11e7-999c-7e6e1d673303.png">
+
+### 3.1 Tuples and Maps
+#### 3.2 Tuple Data Types
+<img width="720" alt="screen shot 2017-08-19 at 10 46 50" src="https://user-images.githubusercontent.com/4185328/29485570-ca20ce1c-84cb-11e7-85ac-febcba00131c.png">
+
+### 3.3 Pattern Matching Tuples
+Using pattern matching, assign the two values from the existing tuple to two new variables called `paradigm` and `language`.
+<img width="744" alt="screen shot 2017-08-19 at 10 48 07" src="https://user-images.githubusercontent.com/4185328/29485577-ec39daf2-84cb-11e7-8842-26dbfc1b99ed.png">
+```elixir
+{paradigm, language}  = {:functional, "Elixir"}
+IO.puts "Paradigm: #{paradigm}"
+IO.puts "Language: #{language}"
+```
+
+### 3.4 Tuples in Function Signature
+<img width="744" alt="screen shot 2017-08-19 at 10 49 52" src="https://user-images.githubusercontent.com/4185328/29485588-2dd9fabe-84cc-11e7-9aee-5166319e3dd4.png">
+**Task 1:** On the first clause of list_transactions, add a tuple as an argument. The first element of the tuple should be `:ok` and the second element should be a variable named `content`.
+```elixir
+defmodule Account do
+  def list_transactions( {:ok, content} ) do
+    count = length(content)
+    IO.puts "Transactions files: #{count}"
+  end
+
+  def list_transactions(  ) do
+    IO.puts "Error listing files"
+  end
+end
+
+File.ls("/home/transactions/") |> Account.list_transactions()
+```
+**Task 2:** On the second clause of list_transactions, add another tuple as an argument. The first element of the tuple should be :error and the second element should be explicitly ignored in order to avoid warnings.
+```elixir
+defmodule Account do
+  def list_transactions( {:ok, content} ) do
+    count = length(content)
+    IO.puts "Transactions files: #{count}"
+  end
+
+  # ITC: You might have had `message` (the error message) passing in as the second
+  # element in this tuple, but that would have given you a compiler warning to say
+  # you weren't doing anything in the function with that message. To avoid that compiler
+  # warning, you can explicitly ignore the second element of the tuple
+  def list_transactions( {:error, _} ) do
+    IO.puts "Error listing files"
+  end
+end
+
+File.ls("/home/transactions/") |> Account.list_transactions()
+```
+#### 3.5 Video on Keyword lists & Defaults
+#### 3.6 Two values
+<img width="712" alt="screen shot 2017-08-19 at 11 20 30" src="https://user-images.githubusercontent.com/4185328/29485809-733f45ce-84d0-11e7-8b62-b7116862644a.png">
+
+#### 3.7 Printer With Options
+<img width="745" alt="screen shot 2017-08-19 at 11 22 23" src="https://user-images.githubusercontent.com/4185328/29485819-b6acd1d2-84d0-11e7-916d-6d4578b9c7b7.png">
+
+**Task 1:** Add a second argument to the greet function called options and set its default value to an empty list [].
+```elixir
+defmodule Printer do
+# ITC: Setting the default value of options to an empty list using `\\ [ ]` means
+# that if the function greet is called with only one argument, we won't get a compiler
+# error as it will take options to be an empty list
+  def greet(name, options \\ [ ] ) do
+
+    "#{greeting}, #{name}"
+  end
+end
+
+Printer.greet("Carlos") |> IO.puts
+Printer.greet("Sergio", prefix: "O HAI") |> IO.puts
+Printer.greet("Dolores", prefix: "Olá") |> IO.puts
+```
+**Task 2:** Inside the greet function, read the value from the :prefix key of options and assign it to a new variable called greeting.
+```elixir
+defmodule Printer do
+  def greet(name, options \\ [ ] ) do
+    greeting = options[:prefix]
+    "#{greeting}, #{name}"
+  end
+end
+
+Printer.greet("Carlos") |> IO.puts
+Printer.greet("Sergio", prefix: "O HAI") |> IO.puts
+Printer.greet("Dolores", prefix: "Olá") |> IO.puts
+```
+**Task 3:** If no value is returned from the :prefix key, then assign the "Hello" string to the greeting variable.
+```elixir
+defmodule Printer do
+  def greet(name, options \\ [ ] ) do
+    greeting = options[:prefix] || "Hello"
+    "#{greeting}, #{name}"
+  end
+end
+
+Printer.greet("Carlos") |> IO.puts
+Printer.greet("Sergio", prefix: "O HAI") |> IO.puts
+Printer.greet("Dolores", prefix: "Olá") |> IO.puts
+```
+Result of this is:
+```shell
+$ elixir printer.exs
+Hello, Carlos
+O HAI, Sergio
+Olá, Dolores
+```
+
+#### 3.8 Video of Maps
+#### 3.9 Account Map
+<img width="706" alt="screen shot 2017-08-19 at 12 13 26" src="https://user-images.githubusercontent.com/4185328/29486170-f1a0c896-84d7-11e7-9ffe-acab71a32f2d.png">
+
+#### 3.10 Person Map
+The different between using `Map.fetch()` and `Map.fetch!()`
++ `Map.fetch()` returns a _tuple_ when successful and an `:error` atom when unsuccessful
+  + e.g. `Map.fetch(person, "age")` where age exists returns `{:ok, 31}`
++ `Map.fetch!()` returns the _value_ when successful and a **KeyError** when unsuccessful
+  + e.g. `Map.fetch!(person, "age")` where age exists returns `31`
+
+<img width="720" alt="screen shot 2017-08-19 at 12 23 32" src="https://user-images.githubusercontent.com/4185328/29486249-48bf63ca-84d9-11e7-9167-506aa19493d2.png">
+
+#### 3.11 Map Pattern Matching
+<img width="740" alt="screen shot 2017-08-19 at 12 27 52" src="https://user-images.githubusercontent.com/4185328/29486280-df4c472c-84d9-11e7-9367-d568af497750.png">
+
+On line 2, use pattern matching to read just the value for the "age" key from the map and assign it to a new variable named age.
+```elixir
+person = %{ "name" => "Sam", "age" => 31 }
+ %{ "age" => age} = person
+IO.puts "Age is #{age}"
+```
+_CMO:_ I could have used `Match.fetch!()` here too (it worked when I tried it in `iex` as per the below)
+but because I couldn't delete the `= person` code from CodeSchool's file,
+I had to create a new map with `%{ "age" => age}` that I could pattern match with the `person` map.
+
+> NOTE: Maps are the only type that support partial pattern matching (i.e. didn't require a match with `name` as well)
+
+#### 3.12 Nested Map Pattern Matching
+<img width="738" alt="screen shot 2017-08-19 at 14 28 15" src="https://user-images.githubusercontent.com/4185328/29487016-ae2a3616-84ea-11e7-9df6-7ddde96aea73.png">
+Using pattern matching and the least amount of code, read the value of the "account" key and assign it to a new variable called account.
+```elixir
+person = %{ "name" => "Sam", "age" => 31,
+  "bank_info" => %{ "routing" => "001002", "account" => "123123" }
+}
+
+  %{ "bank_info" => %{"account" => account}} = person
+IO.puts "Bank Account is #{account}"
+```
