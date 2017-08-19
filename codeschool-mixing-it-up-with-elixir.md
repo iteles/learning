@@ -1,3 +1,5 @@
+## Mixing it up with Elixir
+
 Trying out CodeSchool's `Mixing it up with Elixir` course, so that the practical can help with the theory.
 
 Below I've captured the challenges as that's where the bulk of my learning lies.
@@ -92,4 +94,53 @@ print_double = &(&1 * 2)
 
 IO.puts print_double.(30)
 ```
-Caught me out (CMO): the arguments have to be referred to by their number (first argument =1, second =2 and so on) and cannot be referred to in the shorthand by a name such as `number` in this case.
+_Caught me out (CMO)_: the arguments have to be referred to by their number (first argument =1, second =2 and so on) and cannot be referred to in the shorthand by a name such as `number` in this case.
+
+### 2.1 The End is the Beginning - Lists & Recursion
+
+There are no `for` loops in Elixir so we use recursion to essentially iterate over
+a list (in this case) until its empty. This is where a function calls itself with
+continuously until it's told to stop.
+
+#### 2.2. The Cons Operator
+<img width="715" alt="screen shot 2017-08-19 at 10 24 13" src="https://user-images.githubusercontent.com/4185328/29485368-a7d3de06-84c8-11e7-9543-b8eb78b7f144.png">
+
+#### 2.3 Pattern Matching Lists
+**Task 1:** Complete the `list_names` function signature by adding a list as an argument to the function. The list should use the cons operator, and pattern match the first element to the `head` variable and the remaining elements to the `tail` variable.
+
+<img width="743" alt="screen shot 2017-08-19 at 10 26 03" src="https://user-images.githubusercontent.com/4185328/29485380-dd0ff56e-84c8-11e7-8ab2-c4c29c26428f.png">
+```elixir
+defmodule Printer do
+  def list_names( [head | tail ] ) do
+    IO.puts "Name: #{head}"  
+  end
+
+# ITC: This second clause allows the recursive function to finish (every recursive
+# function should have one) - when the list is empty, stop iterating over it
+  def list_names([]) do
+    IO.puts "Done."
+  end
+end
+
+users = ["Brooke", "Aspen", "Jordan", "Glenn", "Taylor"]
+Printer.list_names(users)
+```
+**Task 2:** On the last line of the `list_names` function, use recursion by calling the `list_names` function and passing in the `tail`, which will continue listing names while the list is not empty.
+```elixir
+defmodule Printer do
+  def list_names( [head | tail ] ) do
+    IO.puts "Name: #{head}"
+    list_names(tail)
+  end
+
+  def list_names([]) do
+    IO.puts "Done."
+  end
+end
+
+users = ["Brooke", "Aspen", "Jordan", "Glenn", "Taylor"]
+Printer.list_names(users)
+```
+
+#### 2.4 The two cases for recursion
+<img width="707" alt="screen shot 2017-08-19 at 10 37 01" src="https://user-images.githubusercontent.com/4185328/29485473-65527450-84ca-11e7-999c-7e6e1d673303.png">
