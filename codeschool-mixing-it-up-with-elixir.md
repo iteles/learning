@@ -290,3 +290,123 @@ person = %{ "name" => "Sam", "age" => 31,
   %{ "bank_info" => %{"account" => account}} = person
 IO.puts "Bank Account is #{account}"
 ```
+
+## 4. Control Flow
+### 4.1 Case statement
+When you find yourself using nested `if` statements, use the `case` statement instead to avoid the code smell.
+
+On a separate note, functions like `bytesize()` are built into Elixir and can therefore be called without an enclosing module: just `bytesize(x)` instead of `Module.bytesize(x)`.
+
+#### 4.2 `case` Tests
+<img width="720" alt="screen shot 2017-08-19 at 14 47 23" src="https://user-images.githubusercontent.com/4185328/29487197-6fab1fe2-84ed-11e7-8a10-8fc290374b5e.png">
+
+#### 4.3 Transfer with `case`
+Original code:
+```elixir
+defmodule Account do
+  def transfer_amount(from, to, amount) do
+    if amount < 5000 do
+      do_transfer(from, to, amount)
+      { :ok, amount }
+    else
+      { :error, "Invalid Transfer" }
+    end
+  end
+
+  defp do_transfer(_from, _to, _amount) do
+    IO.puts "Transfer done!"
+  end
+end
+
+from = 123123
+to = 123124
+amount = 100.00
+
+```
+**Task 1:** Write a `case` statement that takes `Account.transfer_amount(from, to, amount)` as the test value. Don't forget to write the `do/end` blocks.
+```elixir
+case Account.transfer_amount(from, to, amount) do
+end
+```
+
+**Task 2** Add `{:ok, value} as the first pattern. When there's a match, use the IO.puts function to output the string `"Transferred: $#{value}".
+```elixir
+case Account.transfer_amount(from, to, amount) do
+  {:ok, value} -> IO.puts("Transferred: $#{value}")
+end
+```
+**Task 3:** Add {:error, message} as the second pattern. When there's a match, use the IO.puts function to output the string "Error: #{message}".
+```elixir
+defmodule Account do
+  def transfer_amount(from, to, amount) do
+    if amount < 5000 do
+      do_transfer(from, to, amount)
+      { :ok, amount }
+    else
+      { :error, "Invalid Transfer" }
+    end
+  end
+
+  defp do_transfer(_from, _to, _amount) do
+    IO.puts "Transfer done!"
+  end
+end
+
+from = 123123
+to = 123124
+amount = 100.00
+
+case Account.transfer_amount(from, to, amount) do
+  {:ok, value} -> IO.puts("Transferred: $#{value}")
+  {:error, message} -> IO.puts("Error: #{message}")
+end
+```
+
+#### 4.4 Adding a guard clause
+Add a new pattern with the guard clause as the first entry to the case statement that returns a match for the tuple {:ok, value} and also when value is greater than 1000. When this pattern is matched, it should print "Amount transferred." to the console.
+```elixir
+case Account.transfer_amount(from, to, amount) do
+  {:ok, value} when value > 1000 -> IO.puts "Amount transferred."
+  {:ok, value} -> IO.puts "Transferred: $#{value}"
+  {:error, message} -> IO.puts "Error: #{message}"
+end
+```
+#### 4.5 Vido on the `cond` clause
+Good practice to have a `true` condition hard-coded as the last line in a `cond` statement as `cond` will raise an error if none of the conditions are met. e.g. `true -> amount < 300`
+
+`case` vs `cond`:
++ `case` for matching on multiple patterns
++ `cond` for checking multiple conditions
+
+#### 4.6 `cond` checks
+<img width="712" alt="screen shot 2017-08-19 at 15 14 46" src="https://user-images.githubusercontent.com/4185328/29487462-37134264-84f1-11e7-8eae-236bf6068978.png">
+
+#### 4.7 The Validator
+The following `validate_age` function from the Validator module returns a string based on the age passed as argument. Let’s rewrite this function to use a `cond` statement instead of nested if statements.
+```elixir
+defmodule Validator do
+  def validate_age(age) do
+    if age < 18 do
+      "Under 18"
+    else
+      if age < 21 do
+        "Under 21"
+      else
+        "Adult"
+      end
+    end
+  end
+end
+```
+Answer:
+```elixir
+defmodule Validator do
+  def validate_age(age) do
+    cond do
+      age < 18 -> "Under 18"
+      age < 21 -> "Under 21"
+      true -> "Adult"
+    end
+  end
+end
+```
