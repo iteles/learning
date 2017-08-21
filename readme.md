@@ -4,6 +4,7 @@ This will be a repository for the various exercises I'm doing whilst I learn fro
 The exercises will be commented throughout, so should be a useful reference tool as well.
 
 This includes exercises from:
++ CodeSchool's ['Mixing It up with Elixir'](https://github.com/iteles/learning/blob/master/codeschool-mixing-it-up-with-elixir.md)
 * Professional Node.js, by Pedro Teixeira
 * [Makemehapi workshopper](https://github.com/spumko/makemehapi) , by [@nvcexploder](https://twitter.com/nvcexploder) & the team at Walmart (June 2014)
 * [Learn-hapi](https://github.com/nelsonic/learn-hapi) tutorial including validating with Joi and testing with Lab, by [@nelsonic](https://twitter.com/nelsonic)

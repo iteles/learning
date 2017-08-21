@@ -2,7 +2,9 @@
 
 Trying out CodeSchool's `Mixing it up with Elixir` course, so that the practical can help with the theory.
 
-Below I've captured the challenges as that's where the bulk of my learning lies.
+Below I've captured the challenges as that's where the bulk of my learning lies.  
+Throughout I have peppered learnings and comments in the code prefaced by `# ITC`.
+I've also added a couple of gotchas prefaced by 'CMO' (Caugh Me Out).
 
 ### 1. Anonymous Functions
 
