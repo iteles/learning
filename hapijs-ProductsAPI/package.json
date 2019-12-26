@@ -12,7 +12,7 @@
     "dependencies": {
         "hapi": "6.x",
         "lout": "5.x",
-        "handlebars": "2.0.x"
+        "handlebars": "4.5.x"
     },
     "private": "true"
 }
