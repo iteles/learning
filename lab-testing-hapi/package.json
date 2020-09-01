@@ -5,7 +5,7 @@
   "main": "index.js",
 
   "dependencies": {
-      "hapi": "6.x",
+      "hapi": "18.x",
       "lab": "3.2.x",
       "joi": "4.6.x"
   },
