@@ -7,7 +7,7 @@
     },
 
     "dependencies": {
-        "hapi": "6.x",
+        "hapi": "18.x",
         "joi": "4.6.x"
 
     },
